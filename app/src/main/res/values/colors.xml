@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#F5B52D     </color>
+    <color name="colorPrimaryDark">#2E557D   </color>
+    <color name="colorAccent">#66BEE9</color>
+    <color name="White">#FFFFFF</color>
+    <color name="tono_azul">#448AFF</color>
+    <color name="btn_flecha">#66BEE9</color>
+    <color name="texto">#000000</color>
+    <color name="barra">#2E557D</color> #34495E
+    <color name="barra2">#5DADE2</color>
+    <color name="gris">#585454</color>
+
+
+</resources>

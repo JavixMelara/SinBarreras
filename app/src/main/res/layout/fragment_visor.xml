@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/relative"
+    tools:context=".fragments.Visor">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+    <ImageView
+        android:id="@+id/visor_imagen"
+        android:layout_width="match_parent"
+        android:layout_height="270dp"
+        android:layout_gravity="center_horizontal"
+
+
+        android:scaleType="fitXY"
+         />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btn_left"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/visor_imagen"
+        android:layout_alignLeft="@id/visor_imagen"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/flecha_left"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/btn_flecha"
+        app:rippleColor="#66BEE9" />
+
+    <TextView
+        android:id="@+id/titulo"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/visor_imagen"
+        android:layout_alignRight="@id/btn_right"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="70dp"
+        android:layout_marginRight="126dp"
+        android:layout_toStartOf="@+id/btn_right"
+        android:layout_toEndOf="@+id/btn_left"
+        android:text="Titulo"
+        android:textColor="@color/texto"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btn_right"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/visor_imagen"
+        android:layout_alignRight="@id/visor_imagen"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/colorAccent"
+        android:src="@drawable/flecha_right"
+        android:tint="#0066BEE9"
+        app:rippleColor="#66BEE9" />
+
+    <TextView
+        android:id="@+id/descripcion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_right"
+        android:layout_marginStart="10dp"
+        android:text="Descripción"
+        android:textColor="@color/texto"
+        android:textStyle="bold"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/descripcion">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/contenido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:text="Descripción"
+        android:textSize="25dp"
+        android:layout_marginBottom="20dp"
+        />
+</LinearLayout>
+
+
+    </ScrollView>
+
+
+
+
+</RelativeLayout>
+
