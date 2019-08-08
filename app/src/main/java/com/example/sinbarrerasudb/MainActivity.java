@@ -17,6 +17,7 @@ import android.view.Menu;
 
 import com.example.sinbarrerasudb.fragments.Ajustes;
 import com.example.sinbarrerasudb.fragments.Consulta;
+import com.example.sinbarrerasudb.fragments.Contenido;
 import com.example.sinbarrerasudb.fragments.Ejercicios;
 import com.example.sinbarrerasudb.fragments.Inicio;
 import com.example.sinbarrerasudb.fragments.Niveles;
@@ -26,7 +27,7 @@ import com.example.sinbarrerasudb.fragments.Visor;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Inicio.OnFragmentInteractionListener, Niveles.OnFragmentInteractionListener,
 Ejercicios.OnFragmentInteractionListener, Ajustes.OnFragmentInteractionListener, Temas_niveles.OnFragmentInteractionListener,
-        Visor.OnFragmentInteractionListener,Consulta.OnFragmentInteractionListener{
+        Visor.OnFragmentInteractionListener,Consulta.OnFragmentInteractionListener, Contenido.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

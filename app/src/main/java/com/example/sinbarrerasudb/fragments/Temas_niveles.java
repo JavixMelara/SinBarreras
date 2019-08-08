@@ -133,7 +133,8 @@ implements Response.Listener<JSONObject>,Response.ErrorListener {
                     myBundle.putString("nivel",nivel);
                     myBundle.putString("nombre_tema",listaTemas.get
                             (recyclerViewTemas.getChildAdapterPosition(v)).getNombre());
-                    Visor fragment= new Visor();
+                   // Visor fragment= new Visor();
+                    Contenido fragment= new Contenido();
                     fragment.setArguments(myBundle);
 
                     Context context=getContext();

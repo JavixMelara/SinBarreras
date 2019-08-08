@@ -21,6 +21,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.sinbarrerasudb.MainActivity;
 import com.example.sinbarrerasudb.R;
+import com.example.sinbarrerasudb.clases.consultarSenias;
 import com.example.sinbarrerasudb.clases.metodos_aux;
 import com.example.sinbarrerasudb.clases.seniasData;
 import com.example.sinbarrerasudb.clases.temasData;
@@ -53,7 +54,7 @@ implements Response.Listener<JSONObject>,Response.ErrorListener {
     private String nivel;
     private String tema;
     private int cont_visor=0;
-
+    private int posicion=0;
     ImageView imagen;
     TextView titulo;
     TextView contenido;
@@ -96,10 +97,12 @@ implements Response.Listener<JSONObject>,Response.ErrorListener {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
-            id_tema= Integer.toString(getArguments().getInt("id_tema")) ;
-            nivel = getArguments().getString("nivel");
+          //  id_tema= Integer.toString(getArguments().getInt("id_tema")) ;
+          //  nivel = getArguments().getString("nivel");
             tema=getArguments().getString("nombre_tema");
-            Toast.makeText(getContext(),"id_tema"+id_tema,Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(getContext(),"id_tema"+id_tema,Toast.LENGTH_SHORT).show();
+            posicion= getArguments().getInt("posicion");
+            cont_visor=posicion;
         }
     }
 
@@ -124,7 +127,7 @@ implements Response.Listener<JSONObject>,Response.ErrorListener {
         }catch (JSONException e){
             e.printStackTrace();
         }
-        inicializar();
+
 
     }
     @Override
@@ -151,13 +154,15 @@ implements Response.Listener<JSONObject>,Response.ErrorListener {
         titulo= vista.findViewById(R.id.titulo);
         contenido= vista.findViewById(R.id.contenido);
         listaSenias=new ArrayList<>();
-        request= Volley.newRequestQueue(getContext());
+        listaSenias = consultarSenias.getListaSenias();
+        inicializar();
+      //  request= Volley.newRequestQueue(getContext());
 
-        metodos_aux net = new metodos_aux();
-        if(net.isOnlineNet())
-            cargarWebService();
-        else
-            Toast.makeText(getContext(),"Sin conexión",Toast.LENGTH_SHORT).show();
+      //  metodos_aux net = new metodos_aux();
+       // if(net.isOnlineNet())
+        //    cargarWebService();
+       // else
+       //     Toast.makeText(getContext(),"Sin conexión",Toast.LENGTH_SHORT).show();
 
         //al iniciar
        // inicializar();inicializar();
@@ -206,11 +211,11 @@ implements Response.Listener<JSONObject>,Response.ErrorListener {
     }
 
     private void inicializar() {
-        titulo.setText(""+listaSenias.get(0).getTitulo());
-        contenido.setText(""+listaSenias.get(0).getDescripcion());
-        if(this.seniasData.getImagen()!=null)
+        titulo.setText(""+listaSenias.get(posicion).getTitulo());
+        contenido.setText(""+listaSenias.get(posicion).getDescripcion());
+        if(listaSenias.get(posicion).getImagen()!=null)
         {
-            imagen.setImageBitmap(listaSenias.get(0).getImagen());
+            imagen.setImageBitmap(listaSenias.get(posicion).getImagen());
         }
         else{
             imagen.setImageResource(R.drawable.contenido_no_disponible_opt);
