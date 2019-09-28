@@ -1,6 +1,7 @@
 package com.example.sinbarrerasudb.fragments;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,12 +11,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.sinbarrerasudb.MainActivity;
@@ -30,6 +33,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -121,65 +125,78 @@ public class Contenido extends Fragment implements Response.Listener<JSONObject>
     }
 
     private void cargarWebService() {
-
         String url="http://192.168.1.3/ejemploBDremota/wsJSONConsultarListaImagenes.php?id_nivel="+nivel+"&id_tema="+id_tema;
         jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
         request.add(jsonObjectRequest);
     }
+
     @Override
     public void onResponse(JSONObject response) {
 
-
-
-        JSONArray json=response.optJSONArray("senias");
-        try{
+        JSONArray json = response.optJSONArray("senias");
+        try {
 
             for (int i = 0; i < json.length(); i++) {
-                seniasData= new seniasData();
+                seniasData = new seniasData();
                 JSONObject jsonObject = null;
                 jsonObject = json.getJSONObject(i);
 
                 seniasData.setTitulo(jsonObject.optString("nombre"));
                 seniasData.setDescripcion(jsonObject.optString("descripcion"));
-                seniasData.setDato(jsonObject.optString("imagen"));
+                seniasData.setRuta_imagen(jsonObject.optString("ruta_imagen"));
                 listaSenias.add(seniasData);
             }
-        }catch (JSONException e){
+
+            for (final seniasData o : listaSenias) {
+                String UrlImagen = "http://192.168.1.3/ejemploBDremota/" + o.getRuta_imagen();
+                UrlImagen.replace(" ", "%20");
+                ImageRequest imageRequest = new ImageRequest(UrlImagen, new Response.Listener<Bitmap>() {
+                    @Override
+                    public void onResponse(Bitmap response) {
+                        o.setImagen(response);
+                    }
+                }, 0, 0, ImageView.ScaleType.CENTER, null, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getContext(), "No se consulto imagen", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                request.add(imageRequest);
+            }
+        } catch (JSONException e) {
             e.printStackTrace();
         }
-        //inicializar();
+
         consultarSenias.setListaSenias(listaSenias);
-        adapter=new contenidoAdapter(listaSenias,getContext());
+        adapter = new contenidoAdapter(listaSenias, getContext());
         adapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle myBundle= new Bundle();
-               int id= recyclerViewContenido.getChildAdapterPosition(v);
-               myBundle.putInt("posicion",id);
-                myBundle.putString("nombre_tema",tema);
-                 Visor fragment= new Visor();
+                Bundle myBundle = new Bundle();
+                int id = recyclerViewContenido.getChildAdapterPosition(v);
+                myBundle.putInt("posicion", id);
+                myBundle.putString("nombre_tema", tema);
+                Visor fragment = new Visor();
                 //Contenido fragment= new Contenido();
                 fragment.setArguments(myBundle);
 
-                Context context=getContext();
+                Context context = getContext();
                 MainActivity myActivity = (MainActivity) context;
 
-                myActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main,fragment).addToBackStack("fragment").commit();
+                Objects.requireNonNull(myActivity).getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).addToBackStack("fragment").commit();
 
             }
         });
 
         recyclerViewContenido.setAdapter(adapter);
     }
+
     @Override
     public void onErrorResponse(VolleyError error) {
-        Toast.makeText(getContext(),"No se consulto",Toast.LENGTH_SHORT).show();
-        Log.i("Error",error.toString());
+        Toast.makeText(getContext(), "No se consulto", Toast.LENGTH_SHORT).show();
+        Log.i("Error", error.toString());
         // imagen.setImageResource(R.drawable.contenido_no_disponible_opt);
     }
-
-
-
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

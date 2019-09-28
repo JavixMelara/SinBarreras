@@ -8,8 +8,18 @@ public class seniasData {
 
     private String titulo;
     private String descripcion;
-    private String dato;
     private Bitmap imagen;
+    private String ruta_imagen;
+    private int nivel;
+    private int tema;
+
+    public String getRuta_imagen() {
+        return ruta_imagen;
+    }
+
+    public void setRuta_imagen(String ruta_imagen) {
+        this.ruta_imagen = ruta_imagen;
+    }
 
     public String getTitulo() {
         return titulo;
@@ -25,23 +35,6 @@ public class seniasData {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public String getDato() {
-        return dato;
-    }
-
-    public void setDato(String dato) {
-        this.dato = dato;
-
-        try{
-            byte[] byteCode= Base64.decode(dato,Base64.DEFAULT);
-            this.imagen= BitmapFactory.decodeByteArray(byteCode,0,byteCode.length);
-
-        }catch (Exception e) {
-        }
-
-
     }
 
     public Bitmap getImagen() {

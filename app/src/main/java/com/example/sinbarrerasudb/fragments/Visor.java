@@ -40,8 +40,7 @@ import java.util.ArrayList;
  * Use the {@link Visor#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Visor extends Fragment
-implements Response.Listener<JSONObject>,Response.ErrorListener {
+public class Visor extends Fragment{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -58,15 +57,9 @@ implements Response.Listener<JSONObject>,Response.ErrorListener {
     ImageView imagen;
     TextView titulo;
     TextView contenido;
-
     FloatingActionButton left;
     FloatingActionButton right;
-
     ArrayList<seniasData> listaSenias;
-    seniasData seniasData=null;
-
-    RequestQueue request;
-    JsonObjectRequest jsonObjectRequest;
     private OnFragmentInteractionListener mListener;
 
     public Visor() {
@@ -105,39 +98,6 @@ implements Response.Listener<JSONObject>,Response.ErrorListener {
             cont_visor=posicion;
         }
     }
-
-    @Override
-    public void onResponse(JSONObject response) {
-
-
-
-        JSONArray json=response.optJSONArray("senias");
-        try{
-
-            for (int i = 0; i < json.length(); i++) {
-                seniasData= new seniasData();
-                JSONObject jsonObject = null;
-                jsonObject = json.getJSONObject(i);
-
-                seniasData.setTitulo(jsonObject.optString("nombre"));
-                seniasData.setDescripcion(jsonObject.optString("descripcion"));
-                seniasData.setDato(jsonObject.optString("imagen"));
-                listaSenias.add(seniasData);
-            }
-        }catch (JSONException e){
-            e.printStackTrace();
-        }
-
-
-    }
-    @Override
-    public void onErrorResponse(VolleyError error) {
-       // Toast.makeText(getContext(),"No se consulto",Toast.LENGTH_SHORT).show();
-        Log.i("Error",error.toString());
-        imagen.setImageResource(R.drawable.contenido_no_disponible_opt);
-    }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
@@ -213,19 +173,13 @@ implements Response.Listener<JSONObject>,Response.ErrorListener {
     private void inicializar() {
         titulo.setText(""+listaSenias.get(posicion).getTitulo());
         contenido.setText(""+listaSenias.get(posicion).getDescripcion());
-        if(listaSenias.get(posicion).getImagen()!=null)
+        if(listaSenias.get(posicion).getRuta_imagen()!=null)
         {
             imagen.setImageBitmap(listaSenias.get(posicion).getImagen());
         }
         else{
             imagen.setImageResource(R.drawable.contenido_no_disponible_opt);
         }
-    }
-
-    private void cargarWebService() {
-        String url="http://192.168.1.3/ejemploBDremota/wsJSONConsultarListaImagenes.php?id_nivel="+nivel+"&id_tema="+id_tema;
-        jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
-        request.add(jsonObjectRequest);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -251,8 +205,6 @@ implements Response.Listener<JSONObject>,Response.ErrorListener {
         super.onDetach();
         mListener = null;
     }
-
-
 
     /**
      * This interface must be implemented by activities that contain this

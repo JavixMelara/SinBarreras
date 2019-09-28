@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.example.sinbarrerasudb.R;
 import com.example.sinbarrerasudb.clases.seniasData;
-import com.example.sinbarrerasudb.fragments.Temas_niveles;
+
 
 import java.util.ArrayList;
 

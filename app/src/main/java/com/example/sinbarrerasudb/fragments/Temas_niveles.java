@@ -97,14 +97,12 @@ implements Response.Listener<JSONObject>,Response.ErrorListener {
             mParam2 = getArguments().getString(ARG_PARAM2);
             nivel = getArguments().getString("nivel");
         }
-
-
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        //Toast.makeText(getContext(),"No se consulto",Toast.LENGTH_SHORT).show();
-       // Log.i("Error",error.toString());
+        Toast.makeText(getContext(),"No se consultaron los temas",Toast.LENGTH_SHORT).show();
+        Log.i("Error",error.toString());
     }
 
     @Override
@@ -167,22 +165,16 @@ implements Response.Listener<JSONObject>,Response.ErrorListener {
         MainActivity myActivity = (MainActivity) context;
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) myActivity.findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.barra2));
-       // temasCenter recyclerCenter= new temasCenter();
         listaTemas = new ArrayList<>();
-       // listaTemas = (ArrayList<temasData>) recyclerCenter.getTemasCenterList();
-
         recyclerViewTemas=vista.findViewById(R.id.recycler_temas);
         recyclerViewTemas.setLayoutManager(new LinearLayoutManager(getContext()));
 
         request= Volley.newRequestQueue(getContext());
-
         metodos_aux net = new metodos_aux();
       //  if(net.isOnlineNet())
             cargarWebService();
        // else
           //  Toast.makeText(getContext(),"Sin conexión",Toast.LENGTH_SHORT).show();
-
-
         return  vista;
     }
 
@@ -203,12 +195,6 @@ implements Response.Listener<JSONObject>,Response.ErrorListener {
     public void onAttach(Context context) {
         myContext=(FragmentActivity) context;
         super.onAttach(context);
-       //if (context instanceof OnFragmentInteractionListener) {
-        //    mListener = (OnFragmentInteractionListener) context;
-      //  } else {
-       //     throw new RuntimeException(context.toString()
-       //             + " must implement OnFragmentInteractionListener");
-       // }
     }
 
     @Override

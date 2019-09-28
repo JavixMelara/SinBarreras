@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class consultarSenias {
 
-    static ArrayList<seniasData> listaSenias ;
+    static ArrayList<seniasData> listaSenias;
 
     public static ArrayList<seniasData> getListaSenias() {
         return listaSenias;
