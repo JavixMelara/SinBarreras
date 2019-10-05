@@ -24,8 +24,14 @@ import com.android.volley.toolbox.Volley;
 import com.example.sinbarrerasudb.MainActivity;
 import com.example.sinbarrerasudb.R;
 import com.example.sinbarrerasudb.adapters.contenidoAdapter;
+import com.example.sinbarrerasudb.clases.DB.AppDatabase;
+import com.example.sinbarrerasudb.clases.DB.Queries;
+import com.example.sinbarrerasudb.clases.PreferenciasAjustes;
+import com.example.sinbarrerasudb.clases.Save;
 import com.example.sinbarrerasudb.clases.consultarSenias;
 import com.example.sinbarrerasudb.clases.metodos_aux;
+import com.example.sinbarrerasudb.clases.offline.ResponseListener;
+import com.example.sinbarrerasudb.clases.offline.seniasDataOffline;
 import com.example.sinbarrerasudb.clases.seniasData;
 
 import org.json.JSONArray;
@@ -43,6 +49,7 @@ import java.util.Objects;
  * Use the {@link Contenido#newInstance} factory method to
  * create an instance of this fragment.
  */
+//Esta clase carga de contenido a ConsultarSenias.java
 public class Contenido extends Fragment implements Response.Listener<JSONObject>,Response.ErrorListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -65,7 +72,18 @@ public class Contenido extends Fragment implements Response.Listener<JSONObject>
     ArrayList<seniasData> listaSenias;
     seniasData seniasData=null;
 
+    PreferenciasAjustes oPreferenciasAjustes = new PreferenciasAjustes();
+
+    AppDatabase database;
+    Queries objectDAO = null;
+
+    boolean FirstTime = false;
+
+    seniasDataOffline seniasDataOffline= null;
+
     contenidoAdapter adapter;
+
+    ResponseListener response = new ResponseListener();
 
     private OnFragmentInteractionListener mListener;
 
@@ -113,27 +131,88 @@ public class Contenido extends Fragment implements Response.Listener<JSONObject>
         recyclerViewContenido=vista.findViewById(R.id.recycler_contenido);
         recyclerViewContenido.setLayoutManager(new LinearLayoutManager(getContext()));
         listaSenias=new ArrayList<>();
-
         metodos_aux net = new metodos_aux();
         request= Volley.newRequestQueue(getContext());
-        if(net.isOnlineNet())
+
+
+        response.setListener(new ResponseListener.ResponseObjectListener() {
+            @Override
+            public void onObjectReady(ArrayList<com.example.sinbarrerasudb.clases.seniasData> lista) {
+
+            }
+
+            @Override
+            public void onDataLoaded(ArrayList<com.example.sinbarrerasudb.clases.seniasData> lista) {
+                InsertarSeniasDataOffline(lista);
+                listaSenias=lista;
+                LLenarAdaptador();
+            }
+        });
+
+        //Decidiendo metodo por el cual se obtendran los datos
+
+        if(oPreferenciasAjustes.getPreferenceSwitchOnline(getContext()))
             cargarWebService();
         else
-            Toast.makeText(getContext(),"Sin conexión",Toast.LENGTH_SHORT).show();
+            Offline();
+
+//        if(net.isOnlineNet())
+//          //  cargarWebService();
+//        else
+//            Toast.makeText(getContext(),"Sin conexión",Toast.LENGTH_SHORT).show();
 
         return  vista;
     }
 
-    private void cargarWebService() {
-        String url="http://192.168.1.3/ejemploBDremota/wsJSONConsultarListaImagenes.php?id_nivel="+nivel+"&id_tema="+id_tema;
-        jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
-        request.add(jsonObjectRequest);
+    private void Offline() {
+        database = AppDatabase.getAppDatabase(getContext());
+        objectDAO = database.getQueries();
+
+        //verificar si el tema tiene contenido en la BD
+        if(objectDAO.getCountTema(id_tema)>0){
+            //se realizará un select
+            selectContenido();
+        }
+        else{
+            //se insertará el contenido
+            FirstTime=true; // en la clase temasData el valor falso significa que es primera vez ( lo contrario de aqui)
+           // cargarWebService();
+            response.cargarWebService(nivel,id_tema,getContext());
+
+        }
     }
 
-    @Override
-    public void onResponse(JSONObject response) {
+    private void selectContenido() {
+        ArrayList<seniasDataOffline> contenido;
+        contenido= new ArrayList<>();
+        contenido= (ArrayList<com.example.sinbarrerasudb.clases.offline.seniasDataOffline>) objectDAO.getSeniasDataOfflineList(id_tema);
 
-        JSONArray json = response.optJSONArray("senias");
+        Save save = new Save();
+
+        for(seniasDataOffline datos: contenido)
+        {
+            seniasData = new seniasData();
+
+            seniasData.setTitulo(datos.getTitulo());
+            seniasData.setDescripcion(datos.getDescripcion());
+            seniasData.setImagen(save.getImageSenia(datos.getRuta_imagen_interna(),getContext()));
+
+            listaSenias.add(seniasData);
+        }
+        LLenarAdaptador();
+
+    }
+
+    private void cargarWebService() {
+            String url="http://192.168.1.3/ejemploBDremota/wsJSONConsultarListaImagenes.php?id_nivel="+nivel+"&id_tema="+id_tema;
+            jsonObjectRequest= new JsonObjectRequest(Request.Method.GET,url,null,this,this);
+            request.add(jsonObjectRequest);
+        }
+
+        @Override
+        public void onResponse(JSONObject response) {
+
+            JSONArray json = response.optJSONArray("senias");
         try {
 
             for (int i = 0; i < json.length(); i++) {
@@ -143,12 +222,14 @@ public class Contenido extends Fragment implements Response.Listener<JSONObject>
 
                 seniasData.setTitulo(jsonObject.optString("nombre"));
                 seniasData.setDescripcion(jsonObject.optString("descripcion"));
-                seniasData.setRuta_imagen(jsonObject.optString("ruta_imagen"));
+                seniasData.setRuta_imagen_servidor(jsonObject.optString("ruta_imagen"));
+                seniasData.setNombre_imagen(jsonObject.optString("imagen"));
                 listaSenias.add(seniasData);
+
             }
 
             for (final seniasData o : listaSenias) {
-                String UrlImagen = "http://192.168.1.3/ejemploBDremota/" + o.getRuta_imagen();
+                String UrlImagen = "http://192.168.1.3/ejemploBDremota/" + o.getRuta_imagen_servidor();
                 UrlImagen.replace(" ", "%20");
                 ImageRequest imageRequest = new ImageRequest(UrlImagen, new Response.Listener<Bitmap>() {
                     @Override
@@ -163,9 +244,21 @@ public class Contenido extends Fragment implements Response.Listener<JSONObject>
                 });
                 request.add(imageRequest);
             }
+
+            //a partir de este punto puedo tomar la listaSenias para procesarla en insertar
+     //       if (FirstTime)
+     //           InsertarSeniasDataOffline(listaSenias);
+
+            LLenarAdaptador();
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+
+    }
+
+    private void LLenarAdaptador() {
 
         consultarSenias.setListaSenias(listaSenias);
         adapter = new contenidoAdapter(listaSenias, getContext());
@@ -189,6 +282,37 @@ public class Contenido extends Fragment implements Response.Listener<JSONObject>
         });
 
         recyclerViewContenido.setAdapter(adapter);
+    }
+
+    private void InsertarSeniasDataOffline(ArrayList<seniasData> Contenido) {
+
+
+//        seniasDataOffline.setTitulo(jsonObject.optString("nombre"));
+//        seniasDataOffline.setDescripcion(jsonObject.optString("descripcion"));
+//        seniasDataOffline.setNivel(Integer.valueOf(nivel));
+//        seniasDataOffline.setTema(Integer.valueOf(id_tema));
+        for(seniasData datos: Contenido){
+            seniasDataOffline = new seniasDataOffline();
+
+            seniasDataOffline.setTema(datos.getTema());
+            seniasDataOffline.setNivel(datos.getNivel());
+            seniasDataOffline.setTitulo(datos.getTitulo());
+            seniasDataOffline.setDescripcion(datos.getDescripcion());
+            seniasDataOffline.setRuta_imagen_interna(datos.getNombre_imagen());
+
+            objectDAO.InsertSeniasDataOffline(seniasDataOffline);
+
+            //insertando imagen en memoria
+            Save save = new Save();
+            //conviertiendo a byte
+            save.ConvertBitmapTobyte(datos.getImagen());
+            //guardando imagen
+            save.SaveOnInternalMemory(datos.getNombre_imagen(), getContext());
+
+        }
+
+
+        //objectDAO.DeleteSeniasDataOffline(seniasData);
     }
 
     @Override

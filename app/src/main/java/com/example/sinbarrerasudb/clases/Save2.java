@@ -24,8 +24,8 @@ public class Save2 {
 
     private String guardarImagen (Context context, String nombre, Bitmap imagen){
         ContextWrapper cw = new ContextWrapper(context);
-        File dirImages = cw.getDir(, Context.MODE_PRIVATE);
-        File myPath = new File(dirImages, nombre + .png);
+       File dirImages = cw.getDir("", Context.MODE_PRIVATE);
+       File myPath = new File(dirImages, nombre);
 
         FileOutputStream fos = null;
         try{

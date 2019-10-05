@@ -8,9 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.sinbarrerasudb.MainActivity;
 import com.example.sinbarrerasudb.R;
+import com.example.sinbarrerasudb.clases.offline.ResponseListener;
 
 
 /**
@@ -89,6 +91,7 @@ public class Niveles extends Fragment {
                 Bundle myBundle = new Bundle();
 
                 myBundle.putString("nivel","1");
+                //Temas_niveles_offline.setNivel(1);
 
                 Temas_niveles fragment = new Temas_niveles();
                 fragment.setArguments(myBundle);
@@ -108,6 +111,7 @@ public class Niveles extends Fragment {
                 Bundle myBundle = new Bundle();
 
                 myBundle.putString("nivel","2");
+                //Temas_niveles_offline.setNivel(2);
 
                 Temas_niveles fragment = new Temas_niveles();
                 fragment.setArguments(myBundle);
@@ -127,6 +131,7 @@ public class Niveles extends Fragment {
                 Bundle myBundle = new Bundle();
 
                 myBundle.putString("nivel","3");
+                //Temas_niveles_offline.setNivel(3);
 
                 Temas_niveles fragment = new Temas_niveles();
                 fragment.setArguments(myBundle);

@@ -1,9 +1,17 @@
 package com.example.sinbarrerasudb.clases;
 
-import java.io.Serializable;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
+@Entity (tableName = "TemasDataTabla")
 public class temasData implements Serializable {
 
+    @PrimaryKey
+    @NonNull
     private int id_tema;
     private int nivel;
     private String nombre;
@@ -16,7 +24,7 @@ public class temasData implements Serializable {
         return id_tema;
     }
 
-    public void setId_tema(int id_tema) {
+    public void setId_tema(@NonNull int id_tema) {
         this.id_tema = id_tema;
     }
 

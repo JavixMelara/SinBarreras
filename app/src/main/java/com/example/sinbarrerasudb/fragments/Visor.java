@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,22 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.sinbarrerasudb.MainActivity;
 import com.example.sinbarrerasudb.R;
+import com.example.sinbarrerasudb.clases.PreferenciasAjustes;
 import com.example.sinbarrerasudb.clases.consultarSenias;
-import com.example.sinbarrerasudb.clases.metodos_aux;
 import com.example.sinbarrerasudb.clases.seniasData;
-import com.example.sinbarrerasudb.clases.temasData;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -40,6 +28,8 @@ import java.util.ArrayList;
  * Use the {@link Visor#newInstance} factory method to
  * create an instance of this fragment.
  */
+
+//Esta clase se alimenta de la clase ConsultarSenias.java
 public class Visor extends Fragment{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,7 +50,10 @@ public class Visor extends Fragment{
     FloatingActionButton left;
     FloatingActionButton right;
     ArrayList<seniasData> listaSenias;
+
     private OnFragmentInteractionListener mListener;
+
+    PreferenciasAjustes oPreferenciasAjustes = new PreferenciasAjustes();
 
     public Visor() {
         // Required empty public constructor
@@ -173,13 +166,28 @@ public class Visor extends Fragment{
     private void inicializar() {
         titulo.setText(""+listaSenias.get(posicion).getTitulo());
         contenido.setText(""+listaSenias.get(posicion).getDescripcion());
-        if(listaSenias.get(posicion).getRuta_imagen()!=null)
+        //modificar esta condicion con el almacenamiento local
+        if(oPreferenciasAjustes.getPreferenceSwitchOnline(getContext()))
         {
-            imagen.setImageBitmap(listaSenias.get(posicion).getImagen());
+            if(listaSenias.get(posicion).getRuta_imagen_servidor()!=null)
+            {
+                imagen.setImageBitmap(listaSenias.get(posicion).getImagen());
+            }
+            else{
+                imagen.setImageResource(R.drawable.contenido_no_disponible_opt);
+            }
         }
-        else{
-            imagen.setImageResource(R.drawable.contenido_no_disponible_opt);
+        else
+        {
+            if(listaSenias.get(posicion).getImagen()!=null)
+            {
+                imagen.setImageBitmap(listaSenias.get(posicion).getImagen());
+            }
+            else{
+                imagen.setImageResource(R.drawable.contenido_no_disponible_opt);
+            }
         }
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

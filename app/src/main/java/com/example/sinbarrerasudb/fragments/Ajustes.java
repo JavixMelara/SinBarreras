@@ -1,14 +1,19 @@
 package com.example.sinbarrerasudb.fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Switch;
 
 import com.example.sinbarrerasudb.R;
+import com.example.sinbarrerasudb.clases.PreferenciasAjustes;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 /**
@@ -28,6 +33,9 @@ public class Ajustes extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    Switch Online;
+    private String PREFS_KEY = "mispreferencias";
 
     private OnFragmentInteractionListener mListener;
 
@@ -60,13 +68,53 @@ public class Ajustes extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ajustes, container, false);
+        View Vista= inflater.inflate(R.layout.fragment_ajustes, container, false);
+
+        final PreferenciasAjustes oPreferenciasAjustes = new PreferenciasAjustes();
+        Online = Vista.findViewById(R.id.switch1);
+        //inicializando switch Online
+        Online.setChecked(oPreferenciasAjustes.getPreferenceSwitchOnline(getContext()));
+       Online.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+
+               if(Online.isChecked())
+               {
+                 oPreferenciasAjustes.SavePreferenceSwitchOnline(getContext(),true);
+               }
+               else
+               {
+                  oPreferenciasAjustes.SavePreferenceSwitchOnline(getContext(),false);
+               }
+               //guardando el valor de la preferencia
+
+           }
+       });
+
+        return  Vista;
+    }
+
+
+    public void saveValuePreference(Context context, boolean valor) {
+        SharedPreferences settings = context.getSharedPreferences(PREFS_KEY, MODE_PRIVATE);
+        SharedPreferences.Editor editor;
+        editor = settings.edit();
+        editor.putBoolean("estado_switch_Online", valor);
+        editor.commit();
+    }
+
+    public boolean getValuePreference(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(PREFS_KEY, MODE_PRIVATE);
+        return  preferences.getBoolean("estado_switch_Online", false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
