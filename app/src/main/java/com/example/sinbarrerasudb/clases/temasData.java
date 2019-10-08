@@ -15,6 +15,19 @@ public class temasData implements Serializable {
     private int id_tema;
     private int nivel;
     private String nombre;
+    private int descargado=0;
+
+    public int getDescargado() {
+        return descargado;
+    }
+
+    public void setDescargado(int descargado) {
+        this.descargado = descargado;
+    }
+
+
+
+
 
     public int getNivel() {
         return nivel;

@@ -10,6 +10,8 @@
     <color name="barra">#2E557D</color> #34495E
     <color name="barra2">#5DADE2</color>
     <color name="gris">#585454</color>
+    <color name="descargado">#03A9F4</color>
+
 
 
 </resources>

@@ -1,7 +1,10 @@
 package com.example.sinbarrerasudb.clases.offline;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -13,7 +16,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.sinbarrerasudb.MainActivity;
+import com.example.sinbarrerasudb.R;
 import com.example.sinbarrerasudb.clases.seniasData;
+import com.example.sinbarrerasudb.fragments.Temas_niveles;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,6 +32,8 @@ public class ResponseListener implements Response.Listener<JSONObject>,Response.
 //oyente
     private ResponseObjectListener listener;
     int contador=0;
+    String nivel;
+    Context context;
     RequestQueue request;
     JsonObjectRequest jsonObjectRequest;
 
@@ -36,11 +44,13 @@ public class ResponseListener implements Response.Listener<JSONObject>,Response.
     public ResponseListener()
     {
         this.listener=null;
+        this.nivel=nivel;
+        this.context=context;
     }
     //interfaz
     public interface ResponseObjectListener{
 
-        public void onObjectReady(ArrayList<seniasData> lista);
+        public void onErrorLoaded(ArrayList<seniasData> lista);
 
         public void onDataLoaded(ArrayList<seniasData> lista);
     }
@@ -111,13 +121,17 @@ final boolean indicador = false;
       //  Toast.makeText(getContext(), "No se consulto", Toast.LENGTH_SHORT).show();
         Log.i("Error", error.toString());
         // imagen.setImageResource(R.drawable.contenido_no_disponible_opt);
-    }
-private void enviar() {
-      contador++;
-      if(contador==listaSenias.size() && listener!=null)
-          listener.onDataLoaded(listaSenias);
+        listener.onErrorLoaded(null);
 
-}
+    }
+
+
+    private void enviar() {
+        contador++;
+        if (contador == listaSenias.size() && listener != null)
+            listener.onDataLoaded(listaSenias);
+
+    }
 
 
 

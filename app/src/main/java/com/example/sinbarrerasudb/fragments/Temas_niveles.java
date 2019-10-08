@@ -1,6 +1,7 @@
 package com.example.sinbarrerasudb.fragments;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -78,6 +79,8 @@ public class Temas_niveles extends Fragment implements Response.ErrorListener, R
     AppDatabase database;
     Queries objectDAO = null;
 
+    ProgressDialog progreso;
+
     public Temas_niveles() {
         // Required empty public constructor
     }
@@ -131,13 +134,15 @@ public class Temas_niveles extends Fragment implements Response.ErrorListener, R
         //Decidiendo metodo por el cual se obtendran los datos
 
         if(oPreferenciasAjustes.getPreferenceSwitchOnline(getContext()))
-            cargarWebService();
+        {
+            if(net.isOnlineNet())
+                cargarWebService();
+            else
+                cargarAlertDialog("Activa tu conexión a internet para ver el contenido","Sin conexión");
+        }
+
         else
             Offline();
-
-        //  if(net.isOnlineNet())
-        //   cargarWebService();
-        // else
         //  Toast.makeText(getContext(),"Sin conexión",Toast.LENGTH_SHORT).show();
         return  vista;
     }
@@ -152,18 +157,16 @@ public class Temas_niveles extends Fragment implements Response.ErrorListener, R
          * por primera vez , de lo contrario se hará una consulta a la BD para cargar los temas en el RecyclerView*/
 
         //veficando si es primera vez
-    if(nivel.equals("1"))
-        FirstTime= oPreferenciasAjustes.getStatusLevel1(getContext());
-    else if(nivel.equals("2"))
-        FirstTime= oPreferenciasAjustes.getStatusLevel2(getContext());
-    else
-        FirstTime= oPreferenciasAjustes.getStatusLevel3(getContext());
+        if (nivel.equals("1"))
+            FirstTime = oPreferenciasAjustes.getStatusLevel1(getContext());
+        else if (nivel.equals("2"))
+            FirstTime = oPreferenciasAjustes.getStatusLevel2(getContext());
+        else
+            FirstTime = oPreferenciasAjustes.getStatusLevel3(getContext());
 
-    //primera ves
-        if(!FirstTime)
-        {
-            if(net.isOnlineNet())
-            {
+        //primera ves
+        if (!FirstTime) {
+            if (net.isOnlineNet()) {
                 //realizando consulta a web service
                 cargarWebService();
                 //actualizando el estado de primera ves
@@ -173,23 +176,20 @@ public class Temas_niveles extends Fragment implements Response.ErrorListener, R
                     oPreferenciasAjustes.SaveLevel2FirstTime(getContext(), true);
                 else
                     oPreferenciasAjustes.SaveLevel3FirstTime(getContext(), true);
-            }
-            else
-                cargarAlertDialog();
+            } else
+                cargarAlertDialog("Activa tu conexión a internet, necesitamos descargar algunos recursos", "Primera vez OffLine");
 
-        }
-        else
-        {
+        } else {
             //realizando consulta para llenar la lista
-            listaTemas= (ArrayList<temasData>) objectDAO.getTemasDataList(nivel);
+            listaTemas = (ArrayList<temasData>) objectDAO.getTemasDataList(nivel);
             LlenarAdaptador();
         }
 
     }
 
-    private void cargarAlertDialog() {
+    private void cargarAlertDialog(String texto, String nombre) {
         AlertDialog.Builder SinConexion = new AlertDialog.Builder(getContext());
-        SinConexion.setMessage("Activa tu conexión a internet, necesitamos descargar algunos recursos")
+        SinConexion.setMessage(texto)
                 .setCancelable(false)
                 .setPositiveButton("Entendido", new DialogInterface.OnClickListener() {
                     @Override
@@ -205,11 +205,14 @@ public class Temas_niveles extends Fragment implements Response.ErrorListener, R
                     }
                 });
         AlertDialog titulo = SinConexion.create();
-        titulo.setTitle("Primera vez OffLine");
+        titulo.setTitle(nombre);
         titulo.show();
     }
 
     private void cargarWebService() {
+        progreso = new ProgressDialog(getContext());
+        progreso.setMessage("Cargando...");
+        progreso.show();
         String url = "http://192.168.1.3/ejemploBDremota/wsJSONConsultarTemas.php?id_nivel=" + nivel;
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         request.add(jsonObjectRequest);
@@ -217,7 +220,22 @@ public class Temas_niveles extends Fragment implements Response.ErrorListener, R
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Log.i("Error",error.toString());
+        Log.i("Error", error.toString());
+        progreso.hide();
+        if (!FirstTime && listaTemas.size() == 0) {
+            /*significa que no se descargo contenido por alguna razón en el servidor, puede ser que los servicios
+            esten abajo, entonces los indicadores de primera vez se ponen en falso, se lanza una alerta y se regresa
+            al fragment de niveles*/
+            if (nivel.equals("1"))
+                oPreferenciasAjustes.SaveLevel1FirstTime(getContext(), false);
+            else if (nivel.equals("2"))
+                oPreferenciasAjustes.SaveLevel2FirstTime(getContext(), false);
+            else
+                oPreferenciasAjustes.SaveLevel3FirstTime(getContext(), false);
+
+        }
+        cargarAlertDialog("Parece que hay un problema con el servidor, no podemos " +
+                "acceder al contenido en este momento, intenta más tarde.", "Ups...");
     }
 
     @Override
@@ -241,9 +259,12 @@ public class Temas_niveles extends Fragment implements Response.ErrorListener, R
             }//fin del  for
         } catch (JSONException e) {
             e.printStackTrace();
+            progreso.hide();
+
         }
 
         LlenarAdaptador();
+        progreso.hide();
     }//fin onResponse
 
     private void LlenarAdaptador() {
@@ -251,9 +272,14 @@ public class Temas_niveles extends Fragment implements Response.ErrorListener, R
         adapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //si tengo conexion y estoy en modo offline y hago click significa que se descagará
+                //entonces tengo que modificar el estado
+                int id = listaTemas.get
+                        (recyclerViewTemas.getChildAdapterPosition(v)).getId_tema();
+              //  if (net.isOnlineNet() && !oPreferenciasAjustes.getPreferenceSwitchOnline(getContext()))
+                   // objectDAO.ActualizarEstadoDescarga(String.valueOf(id), 1);
                 Bundle myBundle = new Bundle();
-                myBundle.putInt("id_tema", (listaTemas.get
-                        (recyclerViewTemas.getChildAdapterPosition(v)).getId_tema()));
+                myBundle.putInt("id_tema", id);
                 myBundle.putString("nivel", nivel);
                 myBundle.putString("nombre_tema", listaTemas.get
                         (recyclerViewTemas.getChildAdapterPosition(v)).getNombre());
@@ -268,6 +294,7 @@ public class Temas_niveles extends Fragment implements Response.ErrorListener, R
             }
         });
         recyclerViewTemas.setAdapter(adapter);
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

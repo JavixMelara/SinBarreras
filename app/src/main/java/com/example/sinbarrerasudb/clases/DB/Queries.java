@@ -41,4 +41,7 @@ public interface Queries {
     @Query("SELECT * FROM seniasdataoffline WHERE tema = :IdTema")
     public List<seniasDataOffline> getSeniasDataOfflineList(String IdTema);
 
+    @Query("UPDATE TemasDataTabla SET descargado= :estado WHERE id_tema = :id_tema")
+    public void ActualizarEstadoDescarga(String id_tema,int estado);
+
 }
