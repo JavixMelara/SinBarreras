@@ -16,11 +16,12 @@ import com.example.sinbarrerasudb.clases.temasData;
 import java.util.ArrayList;
 
 public class temasAdapter extends RecyclerView.Adapter<temasAdapter.TemasViewHolder>
-implements View.OnClickListener{
+implements View.OnClickListener, View.OnLongClickListener{
 
     ArrayList<temasData> listaTemas;
     Context context;
     private View.OnClickListener listener;
+    private View.OnLongClickListener listener2;
 
     public temasAdapter(ArrayList<temasData> listaTemas, Context context){
         this.listaTemas=listaTemas;
@@ -31,6 +32,7 @@ implements View.OnClickListener{
     public TemasViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.items_temas,null,false);
         view.setOnClickListener(this);
+        view.setOnLongClickListener(this);
         return new temasAdapter.TemasViewHolder(view);
     }
 
@@ -59,6 +61,18 @@ implements View.OnClickListener{
         if(listener!=null)
             listener.onClick(v);
 
+    }
+
+    public void setOnLongClickListener(View.OnLongClickListener listener2)
+    {
+        this.listener2= listener2;
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        if(listener2!=null)
+            listener2.onLongClick(v);
+        return true;
     }
 
     public class TemasViewHolder extends RecyclerView.ViewHolder {

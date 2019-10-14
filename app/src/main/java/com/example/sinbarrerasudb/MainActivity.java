@@ -21,13 +21,14 @@ import com.example.sinbarrerasudb.fragments.Contenido;
 import com.example.sinbarrerasudb.fragments.Ejercicios;
 import com.example.sinbarrerasudb.fragments.Inicio;
 import com.example.sinbarrerasudb.fragments.Niveles;
+import com.example.sinbarrerasudb.fragments.Notas;
 import com.example.sinbarrerasudb.fragments.Temas_niveles;
 import com.example.sinbarrerasudb.fragments.Visor;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Inicio.OnFragmentInteractionListener, Niveles.OnFragmentInteractionListener,
 Ejercicios.OnFragmentInteractionListener, Ajustes.OnFragmentInteractionListener, Temas_niveles.OnFragmentInteractionListener,
-        Visor.OnFragmentInteractionListener,Consulta.OnFragmentInteractionListener, Contenido.OnFragmentInteractionListener {
+        Visor.OnFragmentInteractionListener,Consulta.OnFragmentInteractionListener, Contenido.OnFragmentInteractionListener, Notas.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,7 +110,11 @@ Ejercicios.OnFragmentInteractionListener, Ajustes.OnFragmentInteractionListener,
         }else if (id == R.id.nav_settings) {
             fragment = new Ajustes();
             selectFragment= true;
+        } else if (id == R.id.nav_notes) {
+            fragment = new Notas();
+            selectFragment= true;
         }
+
 
 
         if(selectFragment)

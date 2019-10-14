@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fab="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/relative"
@@ -16,9 +17,7 @@
         android:layout_height="270dp"
         android:layout_gravity="center_horizontal"
 
-
-        android:scaleType="fitXY"
-         />
+        android:scaleType="fitXY" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btn_left"
@@ -70,15 +69,53 @@
 
     <TextView
         android:id="@+id/descripcion"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/btn_right"
         android:layout_marginStart="10dp"
         android:text="Descripción"
+        android:textSize="20sp"
         android:textColor="@color/texto"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:layout_marginBottom="15dp"/>
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/grupo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/scroll"
+        android:layout_toEndOf="@id/descripcion"
+        app:fab_addButtonColorNormal="@color/colorPrimaryDark"
+        app:fab_addButtonColorPressed="@color/colorPrimary"
+        app:fab_addButtonSize="mini"
+        app:fab_expandDirection="right">
+
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/editar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/textoLogin"
+            app:fab_icon="@drawable/editar"
+            app:fab_size="mini">
+
+        </com.getbase.floatingactionbutton.FloatingActionButton>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/ver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/textoLogin"
+            app:fab_icon="@drawable/ojo"
+            app:fab_size="mini">
+
+        </com.getbase.floatingactionbutton.FloatingActionButton>
+
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
     <ScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/descripcion">
@@ -91,7 +128,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
         android:text="Descripción"
         android:textSize="25dp"
         android:layout_marginBottom="20dp"

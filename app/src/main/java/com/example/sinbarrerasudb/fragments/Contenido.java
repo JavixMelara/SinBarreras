@@ -215,6 +215,9 @@ public class Contenido extends Fragment implements Response.Listener<JSONObject>
             seniasData.setTitulo(datos.getTitulo());
             seniasData.setDescripcion(datos.getDescripcion());
             seniasData.setImagen(save.getImageSenia(datos.getRuta_imagen_interna(),getContext()));
+            seniasData.setNivel(datos.getNivel());
+            seniasData.setTema(datos.getTema());
+            seniasData.setNombre_imagen(datos.getRuta_imagen_interna());
 
             listaSenias.add(seniasData);
         }
@@ -246,6 +249,9 @@ public class Contenido extends Fragment implements Response.Listener<JSONObject>
                 seniasData.setDescripcion(jsonObject.optString("descripcion"));
                 seniasData.setRuta_imagen_servidor(jsonObject.optString("ruta_imagen"));
                 seniasData.setNombre_imagen(jsonObject.optString("imagen"));
+                seniasData.setNivel(jsonObject.optInt("id_nivel"));
+                seniasData.setNivel(jsonObject.optInt("id_tema"));
+
                 listaSenias.add(seniasData);
             }
 
@@ -374,6 +380,9 @@ public class Contenido extends Fragment implements Response.Listener<JSONObject>
         titulo.show();
     }
 
+    //metodo de prueba oara abrir visor de seña desde una nota
+
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -397,6 +406,8 @@ public class Contenido extends Fragment implements Response.Listener<JSONObject>
         super.onDetach();
         mListener = null;
     }
+
+
 
     /**
      * This interface must be implemented by activities that contain this

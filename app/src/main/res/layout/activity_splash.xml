@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/grad_bg"
+    android:animateLayoutChanges="true"
+
+    tools:context=".clases.inicioApp.Activity_Splash">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        >
+
+        <ImageView
+            android:id="@+id/icono"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/icono"
+            android:layout_marginTop="150dp"
+            android:layout_centerHorizontal="true"
+            >
+        </ImageView>
+
+
+        <RelativeLayout
+            android:id="@+id/rellay1"
+            android:layout_below="@+id/icono"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:id="@+id/inicio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/josefin_sans_bold"
+                android:text="SIN BARRERAS"
+                android:textColor="@color/textoLogin"
+                android:textSize="40sp"
+                app:fontFamily="@font/josefin_sans_bold" />
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

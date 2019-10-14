@@ -30,7 +30,9 @@ import com.example.sinbarrerasudb.adapters.temasAdapter;
 import com.example.sinbarrerasudb.clases.DB.AppDatabase;
 import com.example.sinbarrerasudb.clases.DB.Queries;
 import com.example.sinbarrerasudb.clases.PreferenciasAjustes;
+import com.example.sinbarrerasudb.clases.Save;
 import com.example.sinbarrerasudb.clases.metodos_aux;
+import com.example.sinbarrerasudb.clases.offline.seniasDataOffline;
 import com.example.sinbarrerasudb.clases.seniasData;
 import com.example.sinbarrerasudb.clases.temasData;
 import com.google.gson.Gson;
@@ -170,12 +172,6 @@ public class Temas_niveles extends Fragment implements Response.ErrorListener, R
                 //realizando consulta a web service
                 cargarWebService();
                 //actualizando el estado de primera ves
-                if (nivel.equals("1"))
-                    oPreferenciasAjustes.SaveLevel1FirstTime(getContext(), true);
-                else if (nivel.equals("2"))
-                    oPreferenciasAjustes.SaveLevel2FirstTime(getContext(), true);
-                else
-                    oPreferenciasAjustes.SaveLevel3FirstTime(getContext(), true);
             } else
                 cargarAlertDialog("Activa tu conexión a internet, necesitamos descargar algunos recursos", "Primera vez OffLine");
 
@@ -209,6 +205,56 @@ public class Temas_niveles extends Fragment implements Response.ErrorListener, R
         titulo.show();
     }
 
+    private void AlertDialogEliminacion(String texto, String nombre,final int id) {
+        AlertDialog.Builder SinConexion = new AlertDialog.Builder(getContext());
+        SinConexion.setMessage(texto)
+                .setCancelable(false)
+                .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        progreso= new ProgressDialog(getContext());
+                        progreso.setMessage("Eliminando...");
+                        //llamando eliminación
+                        //eliminando de memoria interna
+                        ArrayList<seniasDataOffline> ListaSenias = new ArrayList<>();
+                        Save InternalMemory = new Save();
+
+                        ListaSenias= (ArrayList<seniasDataOffline>) objectDAO.getSeniasDataOfflineList(String.valueOf(id));
+                        for(seniasDataOffline o : ListaSenias)
+                            InternalMemory.DeleteOnInternarMemory(o.getRuta_imagen_interna(),getContext());
+
+                        //eliminando de la base de datos
+
+                        objectDAO.EliminarSenias(String.valueOf(id));
+                        objectDAO.ActualizarEstadoDescarga(String.valueOf(id),0);
+                        progreso.hide();
+                      //  cargando de nuevo el fragment temas_niveles
+                        Bundle myBundle = new Bundle();
+                        myBundle.putString("nivel",nivel);
+                        Temas_niveles fragment = new Temas_niveles();
+                        fragment.setArguments(myBundle);
+                        Context context = getContext();
+                        MainActivity myActivity = (MainActivity) context;
+                        myActivity.getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.content_main, fragment)
+                                .addToBackStack("fragment").commit();
+
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+
+                    }
+                });
+        AlertDialog titulo = SinConexion.create();
+        titulo.setTitle(nombre);
+        titulo.show();
+    }
+
     private void cargarWebService() {
         progreso = new ProgressDialog(getContext());
         progreso.setMessage("Cargando...");
@@ -226,16 +272,21 @@ public class Temas_niveles extends Fragment implements Response.ErrorListener, R
             /*significa que no se descargo contenido por alguna razón en el servidor, puede ser que los servicios
             esten abajo, entonces los indicadores de primera vez se ponen en falso, se lanza una alerta y se regresa
             al fragment de niveles*/
-            if (nivel.equals("1"))
-                oPreferenciasAjustes.SaveLevel1FirstTime(getContext(), false);
-            else if (nivel.equals("2"))
-                oPreferenciasAjustes.SaveLevel2FirstTime(getContext(), false);
-            else
-                oPreferenciasAjustes.SaveLevel3FirstTime(getContext(), false);
+
+            StatusFirstTime(false);
 
         }
         cargarAlertDialog("Parece que hay un problema con el servidor, no podemos " +
                 "acceder al contenido en este momento, intenta más tarde.", "Ups...");
+    }
+
+    private void StatusFirstTime(boolean status) {
+        if (nivel.equals("1"))
+            oPreferenciasAjustes.SaveLevel1FirstTime(getContext(), status);
+        else if (nivel.equals("2"))
+            oPreferenciasAjustes.SaveLevel2FirstTime(getContext(), status);
+        else
+            oPreferenciasAjustes.SaveLevel3FirstTime(getContext(), status);
     }
 
     @Override
@@ -262,7 +313,7 @@ public class Temas_niveles extends Fragment implements Response.ErrorListener, R
             progreso.hide();
 
         }
-
+        StatusFirstTime(true);
         LlenarAdaptador();
         progreso.hide();
     }//fin onResponse
@@ -293,6 +344,40 @@ public class Temas_niveles extends Fragment implements Response.ErrorListener, R
 
             }
         });
+
+        adapter.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                /*se desplegará un alertdialog indicando que si se quiere eliminar el contenido del tema
+                * de ser eliminado se cargara de nuevo el fragment temas niveles*/
+                //Toast.makeText(getContext(),"toque largo",Toast.LENGTH_SHORT).show();
+                //verificando que el tema tiene contenido para desplegar el alert dialog
+                if(!oPreferenciasAjustes.getPreferenceSwitchOnline(getContext()))
+                {
+                    int id = listaTemas.get
+                            (recyclerViewTemas.getChildAdapterPosition(v)).getId_tema();
+                    if(objectDAO.getCountTema(String.valueOf(id))>0)
+                    {
+
+                        //desplegar alert dialog y ejecutando eliminación
+                        AlertDialogEliminacion("¿Deseas eliminar este contenido?","Eliminar tema",id);
+                    }
+                    else
+                    {
+                        Toast.makeText(getContext(),"No hay elementos a eliminar",Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+
+
+
+
+
+                return false;
+            }
+        });
+
+
         recyclerViewTemas.setAdapter(adapter);
 
     }

@@ -10,7 +10,19 @@
     <color name="barra">#2E557D</color> #34495E
     <color name="barra2">#5DADE2</color>
     <color name="gris">#585454</color>
-    <color name="descargado">#03A9F4</color>
+    <color name="descargado">#8DFBC800</color>
+    <color name="ver_nota">#34EE4250</color>
+    <color name="white">#ED00071D</color>
+    <color name="blanco">#EDFFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <color name="gradStart">#EDFFFFFF</color>
+    <color name="gradStop">#EDFFFFFF</color>
+    <color name="textoLogin">#FF9500</color>
+    <color name="fondo_guardar_notas">#EE1ABE77</color>
+    <color name="fondo2_guardar_notas">#00F18C</color>
+    <color name="fondo_cancelar_notas">#B40A18</color>
+    <color name="fondo2_cancelar_notas">#FF0013</color>
+
 
 
 

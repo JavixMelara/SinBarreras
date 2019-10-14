@@ -55,4 +55,12 @@ public class Save {
 
     }
 
+    public void DeleteOnInternarMemory(String Nombre, Context context){
+        boolean eliminado=false;
+        File file= new File(context.getFilesDir().getPath()+ "/"+Nombre);
+        if(file.exists())
+            eliminado= file.delete();
+
+    }
+
 }

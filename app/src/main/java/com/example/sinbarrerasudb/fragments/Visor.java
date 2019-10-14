@@ -14,6 +14,11 @@ import android.widget.Toast;
 
 import com.example.sinbarrerasudb.MainActivity;
 import com.example.sinbarrerasudb.R;
+import com.example.sinbarrerasudb.clases.DB.AppDatabase;
+import com.example.sinbarrerasudb.clases.DB.Queries;
+import com.example.sinbarrerasudb.clases.NotaDialog;
+import com.example.sinbarrerasudb.clases.NotaDialogVisor;
+import com.example.sinbarrerasudb.clases.NotaDialogVisorLink;
 import com.example.sinbarrerasudb.clases.PreferenciasAjustes;
 import com.example.sinbarrerasudb.clases.consultarSenias;
 import com.example.sinbarrerasudb.clases.seniasData;
@@ -47,13 +52,21 @@ public class Visor extends Fragment{
     ImageView imagen;
     TextView titulo;
     TextView contenido;
+
     FloatingActionButton left;
     FloatingActionButton right;
+    com.getbase.floatingactionbutton.FloatingActionButton editar;
+    com.getbase.floatingactionbutton.FloatingActionButton ver;
+    //FloatingActionButton editar;
+    //FloatingActionButton ver;
     ArrayList<seniasData> listaSenias;
 
     private OnFragmentInteractionListener mListener;
 
     PreferenciasAjustes oPreferenciasAjustes = new PreferenciasAjustes();
+
+    AppDatabase database;
+    Queries objectDAO = null;
 
     public Visor() {
         // Required empty public constructor
@@ -108,6 +121,8 @@ public class Visor extends Fragment{
         contenido= vista.findViewById(R.id.contenido);
         listaSenias=new ArrayList<>();
         listaSenias = consultarSenias.getListaSenias();
+        database= AppDatabase.getAppDatabase(getContext());
+        objectDAO=database.getQueries();
         inicializar();
       //  request= Volley.newRequestQueue(getContext());
 
@@ -160,6 +175,45 @@ public class Visor extends Fragment{
 
             }
         });
+        editar= vista.findViewById(R.id.editar);
+        editar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String nota;
+                nota=objectDAO.getNotaTexto(listaSenias.get(cont_visor).getNombre_imagen());
+                if(nota!=null)
+                {
+                    NotaDialogVisor visor= new NotaDialogVisor(getContext(),nota);
+                }
+                else
+                {
+                    Toast.makeText(getContext(),"Crea una nota para ver",Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+        ver = vista.findViewById(R.id.ver);
+        ver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // NotaDialog nota = new NotaDialog(getContext());
+                /* primero se verificará si la nota ya existe, en caso de existir se mostrará
+                 * la nota ya existente precargada en el editext y se mandará un parámetro a
+                 * notas dialog que le indicará que debe actualizar al presionar el boton guardar*/
+                String TextoNota= objectDAO.getNotaTexto(listaSenias.get(cont_visor).getNombre_imagen());
+                boolean actualizar= false;
+                if(TextoNota!=null) //significa que ya existe una nota
+                    actualizar=true;
+
+                NotaDialog nota = new NotaDialog(getContext(),listaSenias.get(cont_visor).getTema(),
+                        listaSenias.get(cont_visor).getNivel(),listaSenias.get(cont_visor).getNombre_imagen(),
+                        listaSenias.get(cont_visor).getTitulo(),actualizar,TextoNota);
+            }
+        });
+
         return vista;
     }
 

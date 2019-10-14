@@ -16,6 +16,10 @@
             android:id="@+id/nav_exercises"
             android:icon="@drawable/ejercicios"
             android:title="@string/menu_exercises" />
+        <item
+            android:id="@+id/nav_notes"
+            android:icon="@drawable/editar"
+            android:title="@string/menu_notes" />
 
     </group>
 

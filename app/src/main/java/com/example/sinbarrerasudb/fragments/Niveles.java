@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.sinbarrerasudb.MainActivity;
 import com.example.sinbarrerasudb.R;
+import com.example.sinbarrerasudb.clases.NotaDialog;
 import com.example.sinbarrerasudb.clases.offline.ResponseListener;
 
 
@@ -106,17 +107,20 @@ public class Niveles extends Fragment {
         boton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Context context=getContext();
-                MainActivity myActivity = (MainActivity) context;
-                Bundle myBundle = new Bundle();
+                //NotaDialog obj = new NotaDialog(getContext());
 
-                myBundle.putString("nivel","2");
-                //Temas_niveles_offline.setNivel(2);
 
-                Temas_niveles fragment = new Temas_niveles();
-                fragment.setArguments(myBundle);
-
-                myActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main,fragment).addToBackStack("fragment").commit();
+//                Context context=getContext();
+//                MainActivity myActivity = (MainActivity) context;
+//                Bundle myBundle = new Bundle();
+//
+//                myBundle.putString("nivel","2");
+//                //Temas_niveles_offline.setNivel(2);
+//
+//                Temas_niveles fragment = new Temas_niveles();
+//                fragment.setArguments(myBundle);
+//
+//                myActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main,fragment).addToBackStack("fragment").commit();
             }
         });
 
