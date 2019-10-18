@@ -175,8 +175,8 @@ public class Visor extends Fragment{
 
             }
         });
-        editar= vista.findViewById(R.id.editar);
-        editar.setOnClickListener(new View.OnClickListener() {
+        ver= vista.findViewById(R.id.ver);
+        ver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -194,8 +194,8 @@ public class Visor extends Fragment{
             }
         });
 
-        ver = vista.findViewById(R.id.ver);
-        ver.setOnClickListener(new View.OnClickListener() {
+        editar = vista.findViewById(R.id.editar);
+        editar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -223,7 +223,7 @@ public class Visor extends Fragment{
         //modificar esta condicion con el almacenamiento local
         if(oPreferenciasAjustes.getPreferenceSwitchOnline(getContext()))
         {
-            if(listaSenias.get(posicion).getRuta_imagen_servidor()!=null)
+            if(listaSenias.get(posicion).getImagen()!=null)
             {
                 imagen.setImageBitmap(listaSenias.get(posicion).getImagen());
             }

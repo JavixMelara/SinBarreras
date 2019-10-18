@@ -55,6 +55,7 @@ public class ResponseListenerNotas {
 
 
     public void cargarWebService(final ArrayList<notasDataOffline> listaNotas, Context context) {
+        contador=0;
         request= Volley.newRequestQueue(context);
         this.listaNotas=listaNotas;
         final boolean indicador = false;

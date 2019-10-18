@@ -68,6 +68,9 @@ public interface Queries {
     @Query("DELETE FROM NotasSenias WHERE NombreSenia = :nombre")
     public void DeleteNota(String nombre);
 
+    @Query("SELECT nombre FROM TemasDataTabla WHERE id_tema = :IdTema")
+    public String ObtenerNombreTema (int IdTema);
+
 
 
 }

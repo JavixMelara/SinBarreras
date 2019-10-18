@@ -305,7 +305,11 @@ public class Temas_niveles extends Fragment implements Response.ErrorListener, R
                 listaTemas.add(temasData);
                 //si es primera ves
                 if (!FirstTime)
+                {
+                    StatusFirstTime(true);
                     objectDAO.InsertTemasData(temasData);
+                }
+
 
             }//fin del  for
         } catch (JSONException e) {
@@ -313,7 +317,7 @@ public class Temas_niveles extends Fragment implements Response.ErrorListener, R
             progreso.hide();
 
         }
-        StatusFirstTime(true);
+
         LlenarAdaptador();
         progreso.hide();
     }//fin onResponse

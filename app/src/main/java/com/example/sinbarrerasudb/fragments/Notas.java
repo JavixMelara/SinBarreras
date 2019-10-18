@@ -1,6 +1,9 @@
 package com.example.sinbarrerasudb.fragments;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -28,6 +31,7 @@ import com.example.sinbarrerasudb.clases.offline.notasDataOffline;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,6 +65,8 @@ public class Notas extends Fragment {
     metodos_aux net = new metodos_aux();
     Save memoria = new Save();
     PreferenciasAjustes oPreferenciasAjustes = new PreferenciasAjustes();
+
+    ProgressDialog progreso;
 
     public Notas() {
         // Required empty public constructor
@@ -110,6 +116,7 @@ public class Notas extends Fragment {
 
         database= AppDatabase.getAppDatabase(getContext());
         objectDao= database.getQueries();
+        progreso = new ProgressDialog(getContext());
 
         listaNotas=new ArrayList<>();
 
@@ -117,6 +124,7 @@ public class Notas extends Fragment {
             @Override
             public void onErrorLoaded(ArrayList<notasDataOffline> lista) {
                 notasOffline(lista,false);
+                progreso.hide();
             }
 
             @Override
@@ -124,7 +132,7 @@ public class Notas extends Fragment {
                //la lista devuelta ya trae las imagenes Online
                 //ahora se agregaran las notas offline
                 notasOffline(lista,true);
-
+                progreso.hide();
             }
         });
 
@@ -214,8 +222,21 @@ public class Notas extends Fragment {
             public void onClick(View v) {
                 NotaDialogVisorLink visor= new NotaDialogVisorLink(getContext(),
                         listaNotasOffline.get(recyclerViewNotas.getChildAdapterPosition(v)).getNota(),
-                        listaNotasOffline.get(recyclerViewNotas.getChildAdapterPosition(v)).getNombreSenia());
+                        listaNotasOffline.get(recyclerViewNotas.getChildAdapterPosition(v)).getNombreSenia(),
+                        listaNotasOffline.get(recyclerViewNotas.getChildAdapterPosition(v)).getTema(),
+                        listaNotasOffline.get(recyclerViewNotas.getChildAdapterPosition(v)).getNivel());
 
+
+            }
+        });
+        adapter.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                //llamar al alert dialog de eliminacion
+                String id = listaNotasOffline.get(recyclerViewNotas.
+                        getChildAdapterPosition(v)).getNombreSenia();
+                AlertDialogEliminacion("¿Estás seguro?","Eliminar nota",id);
+                return false;
             }
         });
 
@@ -244,6 +265,9 @@ public class Notas extends Fragment {
 
             }
             response.cargarWebService(listaNotasOffline,getContext());
+            progreso.setMessage("Cargando...");
+            progreso.show();
+
         }
         else
         {
@@ -318,5 +342,39 @@ public class Notas extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+
+    private void AlertDialogEliminacion(String texto, String nombre, final String id) {
+        AlertDialog.Builder SinConexion = new AlertDialog.Builder(getContext());
+        SinConexion.setMessage(texto)
+                .setCancelable(false)
+                .setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        //eliminando de la base de datos
+                        objectDao.DeleteNota(id);
+                        //actualizando listado de notas
+                        Notas fragment = new Notas();
+                        //Contenido fragment= new Contenido();
+                        MainActivity myActivity = (MainActivity) getContext();
+                        Objects.requireNonNull(myActivity).getSupportFragmentManager().
+                                beginTransaction().replace(R.id.content_main, fragment).
+                                addToBackStack("fragment").commit();
+
+
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+
+                    }
+                });
+        AlertDialog titulo = SinConexion.create();
+        titulo.setTitle(nombre);
+        titulo.show();
     }
 }

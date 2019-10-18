@@ -61,6 +61,7 @@ public class ResponseListener implements Response.Listener<JSONObject>,Response.
 
 
     public void cargarWebService(String nivel, String id_tema, Context context) {
+        contador=0;
         listaSenias=new ArrayList<>();
         request= Volley.newRequestQueue(context);
         String url="http://192.168.1.3/ejemploBDremota/wsJSONConsultarListaImagenes.php?id_nivel="+nivel+"&id_tema="+id_tema;
@@ -102,7 +103,8 @@ final boolean indicador = false;
                 }, 0, 0, ImageView.ScaleType.CENTER, null, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                      //  Toast.makeText(getContext(), "No se consulto imagen", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, "No se consulto imagen", Toast.LENGTH_SHORT).show();
+                        listener.onErrorLoaded(null);
                     }
                 });
                 request.add(imageRequest);

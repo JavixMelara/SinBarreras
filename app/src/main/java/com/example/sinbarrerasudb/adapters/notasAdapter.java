@@ -18,7 +18,7 @@ import com.example.sinbarrerasudb.clases.offline.notasDataOffline;
 import java.util.ArrayList;
 
 public class notasAdapter extends RecyclerView.Adapter<notasAdapter.NotasViewHolder>
- implements  View.OnClickListener{
+ implements  View.OnClickListener,View.OnLongClickListener{
 
 
 
@@ -31,6 +31,7 @@ public class notasAdapter extends RecyclerView.Adapter<notasAdapter.NotasViewHol
     private Bitmap imagen2;
 
     private View.OnClickListener listener;
+    private View.OnLongClickListener listener2;
 
     public notasAdapter(ArrayList<notasDataOffline> listaContenido, Context context) {
         this.listaNotas = listaContenido;
@@ -43,7 +44,12 @@ public class notasAdapter extends RecyclerView.Adapter<notasAdapter.NotasViewHol
     public NotasViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.items_notas,null,false);
         view.setOnClickListener(this);
+        view.setOnLongClickListener(this);
         return new NotasViewHolder(view);
+    }
+
+    public void setListener2(View.OnLongClickListener listener2) {
+        this.listener2 = listener2;
     }
 
     @Override
@@ -80,6 +86,19 @@ public class notasAdapter extends RecyclerView.Adapter<notasAdapter.NotasViewHol
             listener.onClick(v);
 
     }
+
+    @Override
+    public boolean onLongClick(View v) {
+        if(listener2!=null)
+            listener2.onLongClick(v);
+        return true;
+    }
+
+    public void setOnLongClickListener(View.OnLongClickListener listener2)
+    {
+        this.listener2= listener2;
+    }
+
 
     public class NotasViewHolder extends RecyclerView.ViewHolder {
         TextView nombre_senia;

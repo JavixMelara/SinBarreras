@@ -53,7 +53,7 @@ import java.util.Objects;
  * create an instance of this fragment.
  */
 //Esta clase carga de contenido a ConsultarSenias.java
-public class Contenido extends Fragment implements Response.Listener<JSONObject>,Response.ErrorListener {
+public class Contenido extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -73,7 +73,7 @@ public class Contenido extends Fragment implements Response.Listener<JSONObject>
     JsonObjectRequest jsonObjectRequest;
 
     ArrayList<seniasData> listaSenias;
-    seniasData seniasData=null;
+    seniasData seniasData = null;
 
     PreferenciasAjustes oPreferenciasAjustes = new PreferenciasAjustes();
 
@@ -82,7 +82,7 @@ public class Contenido extends Fragment implements Response.Listener<JSONObject>
 
     boolean FirstTime = false;
 
-    seniasDataOffline seniasDataOffline= null;
+    seniasDataOffline seniasDataOffline = null;
 
     contenidoAdapter adapter;
 
@@ -122,9 +122,9 @@ public class Contenido extends Fragment implements Response.Listener<JSONObject>
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
-            id_tema= Integer.toString(getArguments().getInt("id_tema")) ;
+            id_tema = Integer.toString(getArguments().getInt("id_tema"));
             nivel = getArguments().getString("nivel");
-            tema=getArguments().getString("nombre_tema");
+            tema = getArguments().getString("nombre_tema");
 
         }
     }
@@ -134,13 +134,13 @@ public class Contenido extends Fragment implements Response.Listener<JSONObject>
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         ((MainActivity) getActivity()).setActionBarTitle(tema);
-        View vista=inflater.inflate(R.layout.fragment_contenido, container, false);
-        listaContenido= new ArrayList<>();
-        recyclerViewContenido=vista.findViewById(R.id.recycler_contenido);
+        View vista = inflater.inflate(R.layout.fragment_contenido, container, false);
+        listaContenido = new ArrayList<>();
+        recyclerViewContenido = vista.findViewById(R.id.recycler_contenido);
         recyclerViewContenido.setLayoutManager(new LinearLayoutManager(getContext()));
-        listaSenias=new ArrayList<>();
+        listaSenias = new ArrayList<>();
         metodos_aux net = new metodos_aux();
-        request= Volley.newRequestQueue(getContext());
+        request = Volley.newRequestQueue(getContext());
 
 
         response.setListener(new ResponseListener.ResponseObjectListener() {
@@ -150,30 +150,27 @@ public class Contenido extends Fragment implements Response.Listener<JSONObject>
                 cargarAlertDialog("Parece que hay un problema con el servidor, no podemos " +
                         "acceder al contenido en este momento, intenta más tarde.", "Ups...");
             }
+
             @Override
             public void onDataLoaded(ArrayList<com.example.sinbarrerasudb.clases.seniasData> lista) {
-                InsertarSeniasDataOffline(lista);
-                listaSenias=lista;
+                if (FirstTime) {
+                    InsertarSeniasDataOffline(lista);
+                    objectDAO.ActualizarEstadoDescarga(id_tema, 1);
+                }
                 progreso.hide();
-                objectDAO.ActualizarEstadoDescarga(id_tema,1);
+                listaSenias = lista;
                 LLenarAdaptador();
-
             }
         });
 
         //Decidiendo metodo por el cual se obtendran los datos
 
-        if(oPreferenciasAjustes.getPreferenceSwitchOnline(getContext()))
+        if (oPreferenciasAjustes.getPreferenceSwitchOnline(getContext()))
             cargarWebService();
         else
             Offline();
 
-//        if(net.isOnlineNet())
-//          //  cargarWebService();
-//        else
-//            Toast.makeText(getContext(),"Sin conexión",Toast.LENGTH_SHORT).show();
-
-        return  vista;
+        return vista;
     }
 
     private void Offline() {
@@ -181,40 +178,37 @@ public class Contenido extends Fragment implements Response.Listener<JSONObject>
         objectDAO = database.getQueries();
 
         //verificar si el tema tiene contenido en la BD
-        if(objectDAO.getCountTema(id_tema)>0){
+        if (objectDAO.getCountTema(id_tema) > 0) {
             //se realizará un select
             selectContenido();
-        }
-        else{
+        } else {
             //se insertará el contenido
-            FirstTime=true; // en la clase temasData el valor falso significa que es primera vez ( lo contrario de aqui)
-           // cargarWebService();
-            if(net.isOnlineNet() && FirstTime) {
+            FirstTime = true; // en la clase temasData el valor falso significa que es primera vez ( lo contrario de aqui)
+            // cargarWebService();
+            if (net.isOnlineNet() && FirstTime) {
                 progreso = new ProgressDialog(getContext());
                 progreso.setMessage("Cargando...");
                 progreso.show();
                 response.cargarWebService(nivel, id_tema, getContext());
-            }
-            else
-              cargarAlertDialog("Ups... Activa tu conexión a internet para descargarlo","Contenido no descargado");
+            } else
+                cargarAlertDialog("Ups... Activa tu conexión a internet para descargarlo", "Contenido no descargado");
 
         }
     }
 
     private void selectContenido() {
         ArrayList<seniasDataOffline> contenido;
-        contenido= new ArrayList<>();
-        contenido= (ArrayList<com.example.sinbarrerasudb.clases.offline.seniasDataOffline>) objectDAO.getSeniasDataOfflineList(id_tema);
+        contenido = new ArrayList<>();
+        contenido = (ArrayList<com.example.sinbarrerasudb.clases.offline.seniasDataOffline>) objectDAO.getSeniasDataOfflineList(id_tema);
 
         Save save = new Save();
 
-        for(seniasDataOffline datos: contenido)
-        {
+        for (seniasDataOffline datos : contenido) {
             seniasData = new seniasData();
 
             seniasData.setTitulo(datos.getTitulo());
             seniasData.setDescripcion(datos.getDescripcion());
-            seniasData.setImagen(save.getImageSenia(datos.getRuta_imagen_interna(),getContext()));
+            seniasData.setImagen(save.getImageSenia(datos.getRuta_imagen_interna(), getContext()));
             seniasData.setNivel(datos.getNivel());
             seniasData.setTema(datos.getTema());
             seniasData.setNombre_imagen(datos.getRuta_imagen_interna());
@@ -229,67 +223,18 @@ public class Contenido extends Fragment implements Response.Listener<JSONObject>
         progreso = new ProgressDialog(getContext());
         progreso.setMessage("Cargando...");
         progreso.show();
-        String url = "http://192.168.1.3/ejemploBDremota/wsJSONConsultarListaImagenes.php?id_nivel=" + nivel + "&id_tema=" + id_tema;
-        jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
-        request.add(jsonObjectRequest);
-    }
-
-        @Override
-        public void onResponse(JSONObject response) {
-
-            JSONArray json = response.optJSONArray("senias");
-        try {
-
-            for (int i = 0; i < json.length(); i++) {
-                seniasData = new seniasData();
-                JSONObject jsonObject = null;
-                jsonObject = json.getJSONObject(i);
-
-                seniasData.setTitulo(jsonObject.optString("nombre"));
-                seniasData.setDescripcion(jsonObject.optString("descripcion"));
-                seniasData.setRuta_imagen_servidor(jsonObject.optString("ruta_imagen"));
-                seniasData.setNombre_imagen(jsonObject.optString("imagen"));
-                seniasData.setNivel(jsonObject.optInt("id_nivel"));
-                seniasData.setNivel(jsonObject.optInt("id_tema"));
-
-                listaSenias.add(seniasData);
-            }
-
-            for (final seniasData o : listaSenias) {
-                String UrlImagen = "http://192.168.1.3/ejemploBDremota/" + o.getRuta_imagen_servidor();
-                UrlImagen.replace(" ", "%20");
-                ImageRequest imageRequest = new ImageRequest(UrlImagen, new Response.Listener<Bitmap>() {
-                    @Override
-                    public void onResponse(Bitmap response) {
-                        o.setImagen(response);
-                    }
-                }, 0, 0, ImageView.ScaleType.CENTER, null, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getContext(), "No se consulto imagen", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                request.add(imageRequest);
-            }
-
-            //a partir de este punto puedo tomar la listaSenias para procesarla en insertar
-     //       if (FirstTime)
-     //           InsertarSeniasDataOffline(listaSenias);
-
+        if ((listaSenias = consultarSenias.getListaSenias()) != null && consultarSenias.getLastTopic() == Integer.valueOf(id_tema)) {
+            progreso.hide();
             LLenarAdaptador();
-            progreso.hide();
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-            progreso.hide();
-        }
-
+        } else
+            response.cargarWebService(nivel, id_tema, getContext());
 
     }
 
     private void LLenarAdaptador() {
 
-        consultarSenias.setListaSenias(listaSenias);
+        consultarSenias.setListaSenias(listaSenias, Integer.valueOf(id_tema));
         adapter = new contenidoAdapter(listaSenias, getContext());
         adapter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -315,12 +260,7 @@ public class Contenido extends Fragment implements Response.Listener<JSONObject>
 
     private void InsertarSeniasDataOffline(ArrayList<seniasData> Contenido) {
 
-
-//        seniasDataOffline.setTitulo(jsonObject.optString("nombre"));
-//        seniasDataOffline.setDescripcion(jsonObject.optString("descripcion"));
-//        seniasDataOffline.setNivel(Integer.valueOf(nivel));
-//        seniasDataOffline.setTema(Integer.valueOf(id_tema));
-        for(seniasData datos: Contenido){
+        for (seniasData datos : Contenido) {
             seniasDataOffline = new seniasDataOffline();
 
             seniasDataOffline.setTema(datos.getTema());
@@ -340,21 +280,9 @@ public class Contenido extends Fragment implements Response.Listener<JSONObject>
 
         }
 
-
-        //objectDAO.DeleteSeniasDataOffline(seniasData);
     }
 
-    @Override
-    public void onErrorResponse(VolleyError error) {
-       // Toast.makeText(getContext(), "No se consulto", Toast.LENGTH_SHORT).show();
-       // Log.i("Error", error.toString());
-        // imagen.setImageResource(R.drawable.contenido_no_disponible_opt);
-        progreso.hide();
-        cargarAlertDialog("Parece que hay un problema con el servidor, no podemos " +
-                "acceder al contenido en este momento, intenta más tarde.", "Ups...");
-    }
-
-    private void cargarAlertDialog(String texto,String nombre) {
+    private void cargarAlertDialog(String texto, String nombre) {
         AlertDialog.Builder SinConexion = new AlertDialog.Builder(getContext());
         SinConexion.setMessage(texto)
                 .setCancelable(false)
@@ -362,17 +290,13 @@ public class Contenido extends Fragment implements Response.Listener<JSONObject>
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
-                        Context context=getContext();
+                        Context context = getContext();
                         MainActivity myActivity = (MainActivity) context;
                         Bundle myBundle = new Bundle();
-
-                        myBundle.putString("nivel",nivel);
-                        //Temas_niveles_offline.setNivel(1);
-
+                        myBundle.putString("nivel", nivel);
                         Temas_niveles fragment = new Temas_niveles();
                         fragment.setArguments(myBundle);
-
-                        myActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main,fragment).addToBackStack("fragment").commit();
+                        myActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).addToBackStack("fragment").commit();
                     }
                 });
         AlertDialog titulo = SinConexion.create();
@@ -406,7 +330,6 @@ public class Contenido extends Fragment implements Response.Listener<JSONObject>
         super.onDetach();
         mListener = null;
     }
-
 
 
     /**

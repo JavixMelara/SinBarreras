@@ -88,7 +88,7 @@
 
                     android:background="@drawable/btn_guardar_notas"
                     android:fontFamily="@font/josefin_sans_bold"
-                    android:text="Cerrar"
+                    android:text="Ir a seña"
                     android:textAllCaps="false"
                     android:textColor="@color/blanco"
                     android:textSize="17sp"
@@ -106,7 +106,7 @@
                     android:layout_marginBottom="16dp"
                     android:background="@drawable/btn_cancelar_notas"
                     android:fontFamily="@font/josefin_sans_bold"
-                    android:text="Eliminar"
+                    android:text="Cerrar"
                     android:textAllCaps="false"
                     android:textColor="@color/blanco"
                     android:textSize="17sp"
