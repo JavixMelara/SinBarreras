@@ -343,6 +343,8 @@ public class Temas_niveles extends Fragment implements Response.ErrorListener, R
 
                 Context context = getContext();
                 MainActivity myActivity = (MainActivity) context;
+                /*indicador de espera para cuando la pantalla se queda congelada haciendo ping*/
+               // Toast.makeText(getContext(),"Mostrando...",Toast.LENGTH_SHORT).show();
 
                 myActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).addToBackStack("fragment").commit();
 

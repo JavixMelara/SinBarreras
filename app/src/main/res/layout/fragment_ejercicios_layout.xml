@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".fragments.Ejercicios">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/Relative">
+
+
+        <ImageView
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:rotation="0"
+            android:rotationX="0"
+            android:rotationY="0"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_wave"></ImageView>
+
+        <Button
+            android:id="@+id/btnNavEjerciciosInterpreta"
+            android:layout_width="350dp"
+            android:layout_height="157sp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="150dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/botonredondo"
+            android:drawableTop="@drawable/ic_definir"
+            android:fontFamily="@font/josefin_sans_bold"
+            android:text="¡Interpreta señas!"
+            android:textAllCaps="false"
+            android:textColor="@color/colorNaranjaFuerte2"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/btnNavEjerciciosEscoge"
+            android:layout_width="350dp"
+            android:layout_height="157sp"
+            android:layout_below="@+id/btnNavEjerciciosInterpreta"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="68dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/botonredondo"
+            android:drawableTop="@drawable/ic_elegir"
+            android:fontFamily="@font/josefin_sans_bold"
+            android:text="¡Define señas!"
+            android:textAllCaps="false"
+            android:textColor="@color/colorNaranjaFuerte2"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent" />
+    </RelativeLayout>
+
+</ScrollView>
+

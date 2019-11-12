@@ -44,6 +44,10 @@ public interface Queries {
     @Query("SELECT * FROM TemasDataTabla WHERE nivel = :nivel")
     public List<temasData> getTemasDataList(String nivel);
 
+    @Query("SELECT * FROM TemasDataTabla as t WHERE t.nivel = :nivel AND t.descargado=1")
+    public List<temasData> getTemasNamesNotNull(String nivel);
+
+
     @Query("SELECT COUNT(tema) FROM seniasdataoffline WHERE tema = :IdTema")
     public int getCountTema(String IdTema);
 

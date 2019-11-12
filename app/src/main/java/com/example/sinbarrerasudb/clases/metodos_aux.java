@@ -1,5 +1,9 @@
 package com.example.sinbarrerasudb.clases;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.support.v4.content.ContextCompat;
+
 public class metodos_aux {
 
     public Boolean isOnlineNet() {
@@ -16,5 +20,17 @@ public class metodos_aux {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static void wait(Context context, boolean indicador)
+    {
+        ProgressDialog progreso = new ProgressDialog(context);
+        progreso.setMessage("Cargando...");
+
+        if (indicador)
+            progreso.show();
+        else
+            progreso.hide();
+
     }
 }

@@ -15,10 +15,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
+import com.example.sinbarrerasudb.clases.PreferenciasAjustes;
 import com.example.sinbarrerasudb.fragments.Ajustes;
 import com.example.sinbarrerasudb.fragments.Consulta;
 import com.example.sinbarrerasudb.fragments.Contenido;
 import com.example.sinbarrerasudb.fragments.Ejercicios;
+import com.example.sinbarrerasudb.fragments.EjerciciosElije;
+import com.example.sinbarrerasudb.fragments.EjerciciosFin;
+import com.example.sinbarrerasudb.fragments.EjerciciosInterpreta;
+import com.example.sinbarrerasudb.fragments.EjerciciosNivelSelector;
+import com.example.sinbarrerasudb.fragments.EjerciciosTemasSelector;
+import com.example.sinbarrerasudb.fragments.Fragmentelige;
 import com.example.sinbarrerasudb.fragments.Inicio;
 import com.example.sinbarrerasudb.fragments.Niveles;
 import com.example.sinbarrerasudb.fragments.Notas;
@@ -28,7 +35,10 @@ import com.example.sinbarrerasudb.fragments.Visor;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Inicio.OnFragmentInteractionListener, Niveles.OnFragmentInteractionListener,
 Ejercicios.OnFragmentInteractionListener, Ajustes.OnFragmentInteractionListener, Temas_niveles.OnFragmentInteractionListener,
-        Visor.OnFragmentInteractionListener,Consulta.OnFragmentInteractionListener, Contenido.OnFragmentInteractionListener, Notas.OnFragmentInteractionListener {
+        Visor.OnFragmentInteractionListener,Consulta.OnFragmentInteractionListener, Contenido.OnFragmentInteractionListener,
+        Notas.OnFragmentInteractionListener, EjerciciosInterpreta.OnFragmentInteractionListener,
+        EjerciciosElije.OnFragmentInteractionListener, EjerciciosFin.OnFragmentInteractionListener,
+        EjerciciosNivelSelector.OnFragmentInteractionListener, EjerciciosTemasSelector.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +48,11 @@ Ejercicios.OnFragmentInteractionListener, Ajustes.OnFragmentInteractionListener,
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //asignando el nivel
+        PreferenciasAjustes preferenciasAjustes = new PreferenciasAjustes();
+        if(preferenciasAjustes.getCurrentLevel(getApplicationContext())==0)
+            preferenciasAjustes.SaveCurrentLevel(getApplicationContext(),3);
+
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -46,6 +61,7 @@ Ejercicios.OnFragmentInteractionListener, Ajustes.OnFragmentInteractionListener,
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_main,new Inicio()).commit();
 
 
     }
@@ -97,8 +113,8 @@ Ejercicios.OnFragmentInteractionListener, Ajustes.OnFragmentInteractionListener,
         Boolean selectFragment= false;
 
         if (id == R.id.nav_start) {
-          //  fragment= new Inicio();
-            fragment= new Consulta();
+            fragment= new Inicio();
+            //fragment= new Consulta();
             selectFragment= true;
 
         } else if (id == R.id.nav_levels) {

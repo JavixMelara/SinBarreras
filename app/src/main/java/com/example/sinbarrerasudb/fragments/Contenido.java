@@ -132,6 +132,7 @@ public class Contenido extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         ((MainActivity) getActivity()).setActionBarTitle(tema);
         View vista = inflater.inflate(R.layout.fragment_contenido, container, false);
@@ -191,7 +192,10 @@ public class Contenido extends Fragment {
                 progreso.show();
                 response.cargarWebService(nivel, id_tema, getContext());
             } else
+            {
                 cargarAlertDialog("Ups... Activa tu conexión a internet para descargarlo", "Contenido no descargado");
+
+            }
 
         }
     }

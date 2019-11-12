@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/Relative">
+
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="412dp"
+            android:layout_height="194dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.49"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@color/colorNaranja2" />
+
+        <TextView
+            android:id="@+id/cantidad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="8dp"
+            android:autoSizeTextType="uniform"
+            android:fontFamily="@font/josefin_sans_bold"
+            android:lineSpacingExtra="4dp"
+            android:text="1/10"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="40sp"
+            android:layout_alignLeft="@id/imageView2" />
+
+        <TextView
+            android:id="@+id/texto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:autoSizeTextType="uniform"
+            android:fontFamily="@font/josefin_sans_bold"
+            android:lineSpacingExtra="4dp"
+            android:text="Preguntas"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            android:layout_below="@+id/cantidad" />
+
+        <TextView
+            android:id="@+id/cantidadpuntos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="35dp"
+            android:autoSizeTextType="uniform"
+            android:fontFamily="@font/josefin_sans_bold"
+            android:lineSpacingExtra="4dp"
+            android:text="0"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="40sp"
+            android:layout_alignRight="@+id/imageView2" />
+
+        <TextView
+            android:id="@+id/textopuntos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cantidadpuntos"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:autoSizeTextType="uniform"
+            android:fontFamily="@font/josefin_sans_bold"
+            android:lineSpacingExtra="4dp"
+            android:text="Puntos"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            android:layout_alignRight="@+id/imageView2" />
+
+        <ImageView
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="352dp"
+            android:scaleType="centerCrop"
+            android:layout_below="@id/imageView2"
+            android:src="@drawable/ic_wave"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2"></ImageView>
+
+
+        <ImageView
+            android:id="@+id/reloj"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="150dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_hourglass"
+            android:layout_centerHorizontal="true"></ImageView>
+
+        <ProgressBar
+            android:id="@+id/barradeprogreso"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="300dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="110dp"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/textopregunta"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="328dp"
+            android:layout_marginEnd="8dp"
+            android:autoSizeTextType="uniform"
+            android:fontFamily="@font/josefin_sans_bold"
+            android:lineSpacingExtra="4dp"
+            android:text="Elija la seña correcta para:"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary2"
+            android:textSize="30sp"
+             />
+
+        <TextView
+            android:id="@+id/textopreguntadetalle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/textopregunta"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="8dp"
+            android:autoSizeTextType="uniform"
+            android:fontFamily="@font/josefin_sans_bold"
+            android:lineSpacingExtra="4dp"
+            android:text="A"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/colorNaranjaFuerte2"
+            android:textSize="30sp"
+             />
+
+        <ImageButton
+            android:id="@+id/opcion1"
+            android:layout_width="match_parent"
+            android:layout_height="120sp"
+            android:layout_below="@id/textopreguntadetalle"
+            android:layout_centerHorizontal="true"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="15dp"
+            android:autoSizeTextType="uniform"
+            android:background="@drawable/botonredondo"
+            android:paddingTop="10dp"
+            android:src="@drawable/ic_letter_c"
+           />
+
+        <Button
+            android:id="@+id/opcion2"
+            android:layout_width="match_parent"
+            android:layout_height="120sp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/opcion1"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="15dp"
+            android:autoSizeTextType="uniform"
+            android:background="@drawable/botonredondo"
+            android:drawableTop="@drawable/ic_letter_c"
+            android:fontFamily="@font/josefin_sans_bold"
+            android:paddingTop="10dp"
+             />
+
+
+        <Button
+            android:id="@+id/btnNavFinEjercicios"
+            android:layout_width="200dp"
+            android:layout_height="40sp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/opcion2"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="15dp"
+            android:autoSizeTextType="uniform"
+            android:background="@drawable/botonredondo2"
+            android:fontFamily="@font/josefin_sans_bold"
+            android:text="Finalizar Ejercicio"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp"
+            />
+
+    </RelativeLayout>
+
+
+</ScrollView>
+

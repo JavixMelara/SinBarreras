@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.EjerciciosInterpreta">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="416dp"
+                android:layout_height="100dp"
+                android:background="@color/colorNaranja2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/cantidad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/josefin_sans_bold"
+                android:lineSpacingExtra="4dp"
+                android:text="1/10"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="40sp"
+                android:layout_alignLeft="@+id/view"
+                 />
+
+            <TextView
+                android:id="@+id/texto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="46dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/josefin_sans_bold"
+                android:lineSpacingExtra="4dp"
+                android:text="Preguntas"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/cantidadpuntos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="35dp"
+                android:fontFamily="@font/josefin_sans_bold"
+                android:lineSpacingExtra="4dp"
+                android:text="0"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="40sp"
+
+                android:layout_alignEnd="@+id/view"/>
+
+            <TextView
+                android:id="@+id/textopuntos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="46dp"
+                android:layout_marginEnd="8dp"
+                android:layout_alignRight="@+id/view"
+                android:fontFamily="@font/josefin_sans_bold"
+                android:lineSpacingExtra="4dp"
+                android:text="Puntos"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <ImageView
+                android:id="@+id/header"
+                android:layout_width="409dp"
+                android:layout_height="409dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_wave"
+                android:layout_below="@+id/view"
+                ></ImageView>
+
+            <ImageView
+                android:id="@+id/reloj"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="110dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_hourglass"
+                android:layout_centerHorizontal="true"
+                ></ImageView>
+
+            <ProgressBar
+                android:id="@+id/barradeprogreso"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="300dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="75dp"
+                android:layout_centerHorizontal="true" />
+
+            <ImageView
+                android:id="@+id/imagenseña"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="300dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_letter_a"
+                android:layout_centerHorizontal="true">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/textopregunta"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="448dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/josefin_sans_bold"
+                android:lineSpacingExtra="4dp"
+                android:text="¿Qué significa?"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="#FA773D"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:autoSizeTextType="uniform"/>
+
+
+
+            <Button
+                android:id="@+id/opcion1"
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/textopregunta"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
+                android:background="@drawable/botonredondo"
+                android:fontFamily="@font/josefin_sans_bold"
+                android:text="A"
+                android:textAllCaps="false"
+                android:textColor="@color/colorNaranjaFuerte2"
+                android:textSize="25sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.545"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:autoSizeTextType="uniform"/>
+
+            <Button
+                android:id="@+id/opcion2"
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/opcion1"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
+                android:background="@drawable/botonredondo"
+                android:fontFamily="@font/josefin_sans_bold"
+                android:text="B"
+                android:textAllCaps="false"
+                android:textColor="@color/colorNaranjaFuerte2"
+                android:textSize="25sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.545"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:autoSizeTextType="uniform"/>
+
+            <Button
+                android:id="@+id/opcion3"
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/opcion2"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
+                android:background="@drawable/botonredondo"
+                android:fontFamily="@font/josefin_sans_bold"
+                android:text="C"
+                android:textAllCaps="false"
+                android:textColor="@color/colorNaranjaFuerte2"
+                android:textSize="25sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.545"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:autoSizeTextType="uniform"/>
+
+            <Button
+                android:id="@+id/opcion4"
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/opcion3"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
+                android:background="@drawable/botonredondo"
+                android:fontFamily="@font/josefin_sans_bold"
+                android:text="D"
+                android:textAllCaps="false"
+                android:textColor="@color/colorNaranjaFuerte2"
+                android:textSize="25sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.545"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:autoSizeTextType="uniform"/>
+
+            <Button
+                android:id="@+id/btnNavFinEjercicios"
+                android:layout_width="200dp"
+                android:layout_height="40sp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/opcion4"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/botonredondo2"
+                android:fontFamily="@font/josefin_sans_bold"
+                android:text="Finalizar Ejercicio"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="25sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:autoSizeTextType="uniform"/>
+
+        </RelativeLayout>
+
+</ScrollView>
+

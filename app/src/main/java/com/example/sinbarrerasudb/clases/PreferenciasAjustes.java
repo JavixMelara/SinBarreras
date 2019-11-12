@@ -65,5 +65,20 @@ public class PreferenciasAjustes {
         return  preferences.getBoolean("primera_vez_nivel3", false);
     }
 
+    public void SaveCurrentLevel(Context context,int level)
+    {
+        SharedPreferences settings = context.getSharedPreferences(PREFS_KEY, MODE_PRIVATE);
+        SharedPreferences.Editor editor;
+        editor = settings.edit();
+        editor.putInt("nivelCursado", level);
+        editor.commit();
+    }
+
+    public int getCurrentLevel(Context context)
+    {
+        SharedPreferences preferences = context.getSharedPreferences(PREFS_KEY, MODE_PRIVATE);
+        return  preferences.getInt("nivelCursado", 0);
+    }
+
 
 }

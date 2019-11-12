@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.EjerciciosNivelSelector">
+
+    <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textopregunta"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="150dp"
+            android:layout_marginEnd="8dp"
+            android:autoSizeTextType="uniform"
+            android:fontFamily="@font/josefin_sans_bold"
+            android:lineSpacingExtra="4dp"
+            android:text="Elije un nivel"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary2"
+            android:textSize="30sp"
+            />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/level1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            app:cardUseCompatPadding="true"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="5dp"
+            android:layout_marginTop="200dp"
+            android:layout_marginLeft="20dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/numero1">
+
+            </ImageView>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/level2"
+            android:layout_width="115dp"
+            android:layout_height="115dp"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            app:cardUseCompatPadding="true"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="5dp"
+            android:layout_below="@id/level1"
+            android:layout_marginLeft="135dp"
+            android:layout_marginTop="-10dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/numero2">
+
+            </ImageView>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/level3"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            app:cardUseCompatPadding="true"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="5dp"
+            android:layout_below="@id/level2"
+            android:layout_marginLeft="250dp"
+            android:layout_marginTop="0dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/n3_opt">
+
+            </ImageView>
+        </android.support.v7.widget.CardView>
+
+        <ImageView
+            android:id="@+id/header"
+            android:layout_width="409dp"
+            android:layout_height="355dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_wave"
+            android:layout_below="@+id/view"
+            android:layout_alignParentTop="true"
+            ></ImageView>
+
+        <ImageView
+            android:id="@+id/header2"
+            android:layout_width="409dp"
+            android:layout_height="355dp"
+            android:layout_below="@+id/view"
+            android:layout_marginTop="300dp"
+            android:rotation="180"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_wave"></ImageView>
+    </RelativeLayout>
+
+
+</ScrollView>

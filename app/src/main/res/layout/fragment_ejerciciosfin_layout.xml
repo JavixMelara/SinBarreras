@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <android.support.constraint.ConstraintLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="196dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/colorNaranja2"
+            />
+
+        <ImageView
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="352dp"
+            android:layout_marginTop="196dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_wave"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></ImageView>
+
+        <ImageView
+            android:id="@+id/icono"
+            android:layout_width="250dp"
+            android:layout_height="160dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icono_svg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/texto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="148dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/josefin_sans_bold"
+            android:lineSpacingExtra="4dp"
+            android:text="RESULTADOS"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="50sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/icono"
+            android:autoSizeTextType="uniform"/>
+
+        <TextView
+            android:id="@+id/texto2"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="430dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/josefin_sans_bold"
+            android:lineSpacingExtra="4dp"
+            android:text="Puntaje obtenido:"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary2"
+            android:textSize="40sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/icono"
+            android:autoSizeTextType="uniform"/>
+
+        <TextView
+            android:id="@+id/puntos"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="480dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/josefin_sans_bold"
+            android:lineSpacingExtra="4dp"
+            android:text="0 Puntos"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/colorNaranja2"
+            android:textSize="40sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/icono"
+            android:autoSizeTextType="uniform"/>
+
+        <Button
+            android:id="@+id/btnNavEjercicios"
+            android:layout_width="170sp"
+            android:layout_height="100sp"
+            android:layout_below="@+id/btnNavEjerciciosInterpreta"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="580dp"
+            android:background="@drawable/botonredondo"
+            android:fontFamily="@font/josefin_sans_bold"
+            android:text="Regresar"
+            android:textColor="@color/colorNaranjaFuerte2"
+            android:textSize="30sp"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>
+

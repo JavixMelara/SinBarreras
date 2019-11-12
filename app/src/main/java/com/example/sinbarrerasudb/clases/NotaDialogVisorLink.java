@@ -2,6 +2,7 @@ package com.example.sinbarrerasudb.clases;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -36,6 +37,7 @@ public class NotaDialogVisorLink {
     int posicion;
     String nombreSenia;
     int nivel;
+    ProgressDialog progreso;
     public NotaDialogVisorLink(final Context context, String texto, final String nombre, final int id_tema, final int nivel) {
         this.context=context;
         this.id_tema=id_tema;
@@ -106,15 +108,20 @@ public class NotaDialogVisorLink {
                                 @Override
                                 public void onErrorLoaded(ArrayList<com.example.sinbarrerasudb.clases.seniasData> lista) {
                                     cargarAlertDialog("Ocurrió un error, intentalo más tarde ","¡Vaya!");
+                                    progreso.hide();
                                 }
 
                                 @Override
                                 public void onDataLoaded(ArrayList<com.example.sinbarrerasudb.clases.seniasData> lista) {
                                     listaSenias=lista;
                                     openViewer();
+                                    progreso.hide();
                                 }
                             });
                             response.cargarWebService(String.valueOf(nivel),String.valueOf(id_tema),context);
+                            progreso= new ProgressDialog(context);
+                            progreso.setMessage("Cargando...");
+                            progreso.show();
 
 
                     }

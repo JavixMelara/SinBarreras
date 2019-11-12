@@ -22,6 +22,11 @@
     <color name="fondo2_guardar_notas">#00F18C</color>
     <color name="fondo_cancelar_notas">#B40A18</color>
     <color name="fondo2_cancelar_notas">#FF0013</color>
+    <color name="colorPrimary2">#F14251</color>
+    <color name="colorPrimaryDark2">#EF4051</color>
+    <color name="colorAccent2">#FFFFFF</color>
+    <color name="colorNaranja2">#FEC78F</color>
+    <color name="colorNaranjaFuerte2">#FA773D</color>
 
 
 

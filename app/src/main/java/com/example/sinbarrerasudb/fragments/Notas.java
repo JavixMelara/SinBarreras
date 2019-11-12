@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.sinbarrerasudb.MainActivity;
 import com.example.sinbarrerasudb.R;
@@ -23,6 +24,7 @@ import com.example.sinbarrerasudb.clases.DB.Queries;
 import com.example.sinbarrerasudb.clases.NotaDialogVisorLink;
 import com.example.sinbarrerasudb.clases.PreferenciasAjustes;
 import com.example.sinbarrerasudb.clases.Save;
+import com.example.sinbarrerasudb.clases.consultarSenias;
 import com.example.sinbarrerasudb.clases.metodos_aux;
 import com.example.sinbarrerasudb.clases.notasData;
 import com.example.sinbarrerasudb.clases.offline.ResponseListenerNotas;
@@ -131,6 +133,7 @@ public class Notas extends Fragment {
             public void onDataLoaded(ArrayList<notasDataOffline> lista) {
                //la lista devuelta ya trae las imagenes Online
                 //ahora se agregaran las notas offline
+                consultarSenias.setListaNotas(lista);
                 notasOffline(lista,true);
                 progreso.hide();
             }
@@ -245,28 +248,40 @@ public class Notas extends Fragment {
 
 
     private void GetInfo() {
-        if(net.isOnlineNet() && oPreferenciasAjustes.getPreferenceSwitchOnline(getContext()))
+        if(oPreferenciasAjustes.getPreferenceSwitchOnline(getContext()))
         {
-            listaNotas= (ArrayList<notasData>) objectDao.GetNotas(true);
-            listaNotasOffline= new ArrayList<>();
-            for(notasData o : listaNotas)
+            if (net.isOnlineNet())
             {
-             notasDataOffline obj= new notasDataOffline();
+                listaNotas= (ArrayList<notasData>) objectDao.GetNotas(true);
+                listaNotasOffline= new ArrayList<>();
+                for(notasData o : listaNotas)
+                {
+                    notasDataOffline obj= new notasDataOffline();
 
-             obj.setId(o.getId());
-             obj.setTitulo(o.getTitulo());
-             obj.setNivel(o.getNivel());
-             obj.setNombreSenia(o.getNombreSenia());
-             obj.setNota(o.getNota());
-             obj.setTema(o.getTema());
-             obj.setOnline(o.isOnline());
+                    obj.setId(o.getId());
+                    obj.setTitulo(o.getTitulo());
+                    obj.setNivel(o.getNivel());
+                    obj.setNombreSenia(o.getNombreSenia());
+                    obj.setNota(o.getNota());
+                    obj.setTema(o.getTema());
+                    obj.setOnline(o.isOnline());
 
-             listaNotasOffline.add(obj);
+                    listaNotasOffline.add(obj);
 
+                }
+
+                if(consultarSenias.getListaNotas()!=null)
+                    notasOffline(consultarSenias.getListaNotas(),true);
+                else
+                {
+                    response.cargarWebService(listaNotasOffline,getContext());
+                    progreso.setMessage("Cargando...");
+                    progreso.show();
+                }
             }
-            response.cargarWebService(listaNotasOffline,getContext());
-            progreso.setMessage("Cargando...");
-            progreso.show();
+            else
+                Toast.makeText(getContext(), "No se cargaron las imágenes", Toast.LENGTH_SHORT).show();
+
 
         }
         else
