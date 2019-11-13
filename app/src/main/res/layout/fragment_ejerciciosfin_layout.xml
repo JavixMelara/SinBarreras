@@ -90,7 +90,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="480dp"
+            android:layout_marginTop="490dp"
             android:layout_marginEnd="8dp"
             android:fontFamily="@font/josefin_sans_bold"
             android:lineSpacingExtra="4dp"
@@ -105,7 +105,7 @@
             android:autoSizeTextType="uniform"/>
 
         <Button
-            android:id="@+id/btnNavEjercicios"
+            android:id="@+id/Regresar"
             android:layout_width="170sp"
             android:layout_height="100sp"
             android:layout_below="@+id/btnNavEjerciciosInterpreta"

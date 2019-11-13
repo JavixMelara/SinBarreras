@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import com.example.sinbarrerasudb.MainActivity;
+
 import com.example.sinbarrerasudb.R;
 
 public class Fragmentfin extends Fragment {
@@ -24,10 +24,10 @@ public class Fragmentfin extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ejerciciosfin_layout, container, false);
-        btnNavEjercicios = (Button) view.findViewById(R.id.btnNavEjercicios);
+        btnNavEjercicios = (Button) view.findViewById(R.id.Regresar);
         btnNavEjerciciosInterpreta = (Button) view.findViewById(R.id.btnNavEjerciciosInterpreta);
         btnNavEjerciciosEscoge  = (Button) view.findViewById(R.id.btnNavEjerciciosEscoge);
-        btnNavFinEjercicios  = (Button) view.findViewById(R.id.btnNavFinEjercicios);
+        btnNavFinEjercicios  = (Button) view.findViewById(R.id.Responder);
         Log.d(TAG, "onCreateView: started.");
 
         btnNavEjercicios.setOnClickListener(new View.OnClickListener() {

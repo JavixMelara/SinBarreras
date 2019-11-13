@@ -15,7 +15,7 @@ public class seniasDataOffline implements Serializable{
     private Long id;
     private String titulo;
     private String descripcion;
-    private String ruta_imagen_interna;
+    private String ruta_imagen_interna; //es el nombre de la imagen
     private int nivel;
     private int tema;
 

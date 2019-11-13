@@ -27,10 +27,10 @@ public class Fragmentelige extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ejercicioselige_layout, container, false);
-        btnNavEjercicios = (Button) view.findViewById(R.id.btnNavEjercicios);
+        btnNavEjercicios = (Button) view.findViewById(R.id.Regresar);
         btnNavEjerciciosInterpreta = (Button) view.findViewById(R.id.btnNavEjerciciosInterpreta);
         btnNavEjerciciosEscoge  = (Button) view.findViewById(R.id.btnNavEjerciciosEscoge);
-        btnNavFinEjercicios  = (Button) view.findViewById(R.id.btnNavFinEjercicios);
+        btnNavFinEjercicios  = (Button) view.findViewById(R.id.Responder);
         opc1= view.findViewById(R.id.opcion1);
       // opc1.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_letter_b));
         //opc1.setBackgroundResource(R.drawable.ic_letter_b);

@@ -110,17 +110,17 @@ public class Niveles extends Fragment {
                 //NotaDialog obj = new NotaDialog(getContext());
 
 
-//                Context context=getContext();
-//                MainActivity myActivity = (MainActivity) context;
-//                Bundle myBundle = new Bundle();
-//
-//                myBundle.putString("nivel","2");
-//                //Temas_niveles_offline.setNivel(2);
-//
-//                Temas_niveles fragment = new Temas_niveles();
-//                fragment.setArguments(myBundle);
-//
-//                myActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main,fragment).addToBackStack("fragment").commit();
+                Context context=getContext();
+                MainActivity myActivity = (MainActivity) context;
+                Bundle myBundle = new Bundle();
+
+                myBundle.putString("nivel","2");
+                //Temas_niveles_offline.setNivel(2);
+
+                Temas_niveles fragment = new Temas_niveles();
+                fragment.setArguments(myBundle);
+
+                myActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main,fragment).addToBackStack("fragment").commit();
             }
         });
 

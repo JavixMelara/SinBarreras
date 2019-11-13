@@ -187,7 +187,7 @@
 
 
         <Button
-            android:id="@+id/btnNavFinEjercicios"
+            android:id="@+id/Responder"
             android:layout_width="200dp"
             android:layout_height="40sp"
             android:layout_centerHorizontal="true"

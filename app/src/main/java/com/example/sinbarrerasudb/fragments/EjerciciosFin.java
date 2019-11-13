@@ -7,8 +7,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.sinbarrerasudb.MainActivity;
 import com.example.sinbarrerasudb.R;
 
 /**
@@ -28,6 +30,11 @@ public class EjerciciosFin extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private int puntos;
+
+    private TextView puntaje;
+    private Button regresar;
 
     private OnFragmentInteractionListener mListener;
 
@@ -59,6 +66,7 @@ public class EjerciciosFin extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+            puntos = getArguments().getInt("puntos");
         }
     }
 
@@ -66,7 +74,19 @@ public class EjerciciosFin extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_ejerciciosfin_layout,container,false);
+        puntaje= vista.findViewById(R.id.puntos);
+        regresar= vista.findViewById(R.id.Regresar);
 
+        puntaje.setText(puntos+" Puntos");
+        regresar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = getContext();
+                MainActivity myActivity = (MainActivity) context;
+                Ejercicios fragment = new Ejercicios();
+                myActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main, fragment).addToBackStack("fragment").commit();
+            }
+        });
         return vista;
     }
 

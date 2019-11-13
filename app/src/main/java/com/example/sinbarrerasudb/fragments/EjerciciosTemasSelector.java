@@ -169,6 +169,7 @@ public class EjerciciosTemasSelector extends Fragment implements Response.ErrorL
                     Bundle myBundle = new Bundle();
 
                     myBundle.putString("ids",ids.trim());
+                    myBundle.putString("nivel",nivel);
                     //Temas_niveles_offline.setNivel(1);
 
                     if(Ejercicio==1)
