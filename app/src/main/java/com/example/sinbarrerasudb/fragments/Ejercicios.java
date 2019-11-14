@@ -69,7 +69,14 @@ public class Ejercicios extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View vista = inflater.inflate(R.layout.fragment_ejercicios_layout, container, false);
+        ((MainActivity) getActivity()).setActionBarTitle("Ejercicios");
+        Context context=getContext();
+        //color Toolbar
+        MainActivity myActivity = (MainActivity) context;
+        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) myActivity.findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.BarraEjericios));
         btnNavEjerciciosInterpreta = vista.findViewById(R.id.btnNavEjerciciosInterpreta);
         btnNavEjerciciosEscoge  =  vista.findViewById(R.id.btnNavEjerciciosEscoge);
 

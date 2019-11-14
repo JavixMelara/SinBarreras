@@ -121,7 +121,7 @@ public class EjerciciosTemasSelector extends Fragment implements Response.ErrorL
         //color Toolbar
         MainActivity myActivity = (MainActivity) context;
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) myActivity.findViewById(R.id.toolbar);
-        toolbar.setBackgroundColor(getResources().getColor(R.color.barra2));
+        toolbar.setBackgroundColor(getResources().getColor(R.color.BarraEjericios));
         recyclerViewTemas=vista.findViewById(R.id.recycler_temas_selector);
         recyclerViewTemas.setLayoutManager(new LinearLayoutManager(getContext()));
 

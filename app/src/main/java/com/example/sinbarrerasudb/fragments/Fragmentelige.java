@@ -31,7 +31,7 @@ public class Fragmentelige extends Fragment {
         btnNavEjerciciosInterpreta = (Button) view.findViewById(R.id.btnNavEjerciciosInterpreta);
         btnNavEjerciciosEscoge  = (Button) view.findViewById(R.id.btnNavEjerciciosEscoge);
         btnNavFinEjercicios  = (Button) view.findViewById(R.id.Responder);
-        opc1= view.findViewById(R.id.opcion1);
+        opc1= view.findViewById(R.id.opcion1_e2);
       // opc1.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_letter_b));
         //opc1.setBackgroundResource(R.drawable.ic_letter_b);
         opc1.setImageResource(R.drawable.ic_letter_b); // esta es la buena

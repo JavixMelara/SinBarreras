@@ -1,17 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.Ajustes">
 
     <!-- TODO: Update blank fragment layout -->
 
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Modo Online"
-        />
 
-</FrameLayout>
+    <android.support.v7.widget.CardView
+        android:id="@+id/OnOffLine"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="30dp"
+        app:cardCornerRadius="30sp"
+        app:cardElevation="6dp"
+        app:layout_columnWeight="1"
+        app:layout_rowWeight="1"
+        android:layout_marginTop="30dp"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Activar modo OnLine"
+            android:textAlignment="center"
+            android:textSize="30dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/josefin_sans_bold"
+            android:textColor="#03A9F4"
+            >
+
+        </TextView>
+        <Switch
+            android:id="@+id/switch1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_gravity="center"
+            />
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/sesion"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="30dp"
+        app:cardCornerRadius="30sp"
+        app:cardElevation="6dp"
+        app:layout_columnWeight="1"
+        app:layout_rowWeight="1"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/OnOffLine"
+        >
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/incorrecta_e2">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cerrar Sesión"
+        android:layout_centerVertical="true"
+        android:textAlignment="center"
+        android:layout_centerHorizontal="true"
+        android:textSize="30dp"
+        android:textColor="#E63E0A"
+        android:fontFamily="@font/josefin_sans_bold">
+
+
+    </TextView>
+
+</RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

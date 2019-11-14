@@ -127,7 +127,10 @@
                 android:layout_marginTop="270dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_letter_a"
-                android:layout_centerHorizontal="true">
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/botonredondo"
+                android:padding="10dp">
+
 
             </ImageView>
 
@@ -153,7 +156,7 @@
 
 
             <Button
-                android:id="@+id/opcion1"
+                android:id="@+id/opcion1_e2"
                 android:layout_width="match_parent"
                 android:layout_height="40sp"
                 android:layout_centerHorizontal="true"
@@ -174,11 +177,11 @@
                 android:autoSizeTextType="uniform"/>
 
             <Button
-                android:id="@+id/opcion2"
+                android:id="@+id/opcion2_e2"
                 android:layout_width="match_parent"
                 android:layout_height="40sp"
                 android:layout_centerHorizontal="true"
-                android:layout_below="@+id/opcion1"
+                android:layout_below="@+id/opcion1_e2"
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginLeft="8dp"
@@ -195,11 +198,11 @@
                 android:autoSizeTextType="uniform"/>
 
             <Button
-                android:id="@+id/opcion3"
+                android:id="@+id/opcion3_e2"
                 android:layout_width="match_parent"
                 android:layout_height="40sp"
                 android:layout_centerHorizontal="true"
-                android:layout_below="@+id/opcion2"
+                android:layout_below="@+id/opcion2_e2"
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginLeft="8dp"
@@ -220,7 +223,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40sp"
                 android:layout_centerHorizontal="true"
-                android:layout_below="@+id/opcion3"
+                android:layout_below="@+id/opcion3_e2"
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginLeft="8dp"

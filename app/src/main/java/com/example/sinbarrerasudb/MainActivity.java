@@ -25,7 +25,6 @@ import com.example.sinbarrerasudb.fragments.EjerciciosFin;
 import com.example.sinbarrerasudb.fragments.EjerciciosInterpreta;
 import com.example.sinbarrerasudb.fragments.EjerciciosNivelSelector;
 import com.example.sinbarrerasudb.fragments.EjerciciosTemasSelector;
-import com.example.sinbarrerasudb.fragments.Fragmentelige;
 import com.example.sinbarrerasudb.fragments.Inicio;
 import com.example.sinbarrerasudb.fragments.Niveles;
 import com.example.sinbarrerasudb.fragments.Notas;

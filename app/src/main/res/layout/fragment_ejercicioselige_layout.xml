@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".fragments.EjerciciosElije">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -155,7 +155,7 @@
              />
 
         <ImageButton
-            android:id="@+id/opcion1"
+            android:id="@+id/opcion1_e2"
             android:layout_width="match_parent"
             android:layout_height="120sp"
             android:layout_below="@id/textopreguntadetalle"
@@ -165,25 +165,40 @@
             android:layout_marginTop="15dp"
             android:autoSizeTextType="uniform"
             android:background="@drawable/botonredondo"
-            android:paddingTop="10dp"
-            android:src="@drawable/ic_letter_c"
+            android:scaleType="centerInside"
+            android:padding="6dp"
            />
 
-        <Button
-            android:id="@+id/opcion2"
+        <ImageButton
+            android:id="@+id/opcion2_e2"
             android:layout_width="match_parent"
             android:layout_height="120sp"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/opcion1"
+            android:layout_below="@+id/opcion1_e2"
             android:layout_marginRight="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:autoSizeTextType="uniform"
             android:background="@drawable/botonredondo"
-            android:drawableTop="@drawable/ic_letter_c"
             android:fontFamily="@font/josefin_sans_bold"
-            android:paddingTop="10dp"
+            android:scaleType="centerInside"
+            android:padding="6dp"
              />
+        <ImageButton
+            android:id="@+id/opcion3_e2"
+            android:layout_width="match_parent"
+            android:layout_height="120sp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/opcion2_e2"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="5dp"
+            android:autoSizeTextType="uniform"
+            android:background="@drawable/botonredondo"
+            android:fontFamily="@font/josefin_sans_bold"
+            android:scaleType="centerInside"
+            android:padding="6dp"
+            />
 
 
         <Button
@@ -191,13 +206,13 @@
             android:layout_width="200dp"
             android:layout_height="40sp"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/opcion2"
+            android:layout_below="@+id/opcion3_e2"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="15dp"
             android:autoSizeTextType="uniform"
             android:background="@drawable/botonredondo2"
             android:fontFamily="@font/josefin_sans_bold"
-            android:text="Finalizar Ejercicio"
+            android:text="Siguiente"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="25sp"

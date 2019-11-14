@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,9 +17,7 @@ import android.widget.Toast;
 
 import com.example.sinbarrerasudb.MainActivity;
 import com.example.sinbarrerasudb.R;
-import com.example.sinbarrerasudb.SleepListener;
 import com.example.sinbarrerasudb.clases.DB.AppDatabase;
-import com.example.sinbarrerasudb.clases.DB.AppDatabase_Impl;
 import com.example.sinbarrerasudb.clases.DB.Queries;
 import com.example.sinbarrerasudb.clases.PreferenciasAjustes;
 import com.example.sinbarrerasudb.clases.Save;
@@ -30,9 +27,6 @@ import com.example.sinbarrerasudb.clases.seniasData;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
-
-import static android.os.SystemClock.sleep;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -117,11 +111,16 @@ public class EjerciciosInterpreta extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View vista= inflater.inflate(R.layout.fragment_ejerciciosinterpreta_layout,container,false);
-
+        ((MainActivity) getActivity()).setActionBarTitle("Ejercicios");
+        Context context=getContext();
+        //color Toolbar
+        MainActivity myActivity = (MainActivity) context;
+        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) myActivity.findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.BarraEjericios));
         senia= vista.findViewById(R.id.imagensenia);
-        opc1= vista.findViewById(R.id.opcion1);
-        opc2= vista.findViewById(R.id.opcion2);
-        opc3= vista.findViewById(R.id.opcion3);
+        opc1= vista.findViewById(R.id.opcion1_e2);
+        opc2= vista.findViewById(R.id.opcion2_e2);
+        opc3= vista.findViewById(R.id.opcion3_e2);
         opc4= vista.findViewById(R.id.opcion4);
         responder= vista.findViewById(R.id.Responder);
         NPreguntas= vista.findViewById(R.id.cantidad);
@@ -136,7 +135,7 @@ public class EjerciciosInterpreta extends Fragment {
             public void onErrorLoaded(ArrayList<com.example.sinbarrerasudb.clases.seniasData> lista) {
                 progreso.hide();
                 cargarAlertDialog("Parece que hay un problema con el servidor, no podemos " +
-                        "acceder al contenido en este momento, intenta más tarde.", "Ups...");
+                        "acceder al contenido en este momento, intenta más tarde.", "Ups...",new Inicio());
             }
 
             @Override
@@ -149,6 +148,7 @@ public class EjerciciosInterpreta extends Fragment {
                     response.cargarWebService(nivel, id[id.length - cantidadTemas], getContext());
                 } else {
                     progreso.hide();
+                    validarCantidad(true);
                     Inicializar();
                 }
             }
@@ -166,6 +166,7 @@ public class EjerciciosInterpreta extends Fragment {
             mostrarProgress();
             cargarListaOffline();
             progreso.hide();
+            validarCantidad(false);
             Inicializar();
         }
 
@@ -274,7 +275,7 @@ public class EjerciciosInterpreta extends Fragment {
         return senias;
     }
 
-    private void cargarAlertDialog(String texto, String nombre) {
+    private void cargarAlertDialog(String texto, String nombre, final Fragment fragment) {
         AlertDialog.Builder SinConexion = new AlertDialog.Builder(getContext());
         SinConexion.setMessage(texto)
                 .setCancelable(false)
@@ -284,7 +285,7 @@ public class EjerciciosInterpreta extends Fragment {
                         dialog.cancel();
                         Context context = getContext();
                         MainActivity myActivity = (MainActivity) context;
-                        myActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main, new Inicio()).addToBackStack("fragment").commit();
+                        myActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main,fragment).addToBackStack("fragment").commit();
                     }
                 });
         AlertDialog titulo = SinConexion.create();
@@ -479,6 +480,17 @@ public class EjerciciosInterpreta extends Fragment {
     private void Marcadores(){
         NPreguntas.setText((numeroPregunta+1)+"/10");
         Puntaje.setText(puntos+"");
+    }
+
+    private void validarCantidad(boolean Online){
+        if(Online){
+            if(ListaOnline.size()<=16)
+                cargarAlertDialog("El tema tiene muy poco contenido para ejecutar el ejecicio. Incluye más temas","Error", new Ejercicios());
+        }
+        else{
+            if(ListaOffline.size()<=16)
+                cargarAlertDialog("El tema tiene muy poco contenido para ejecutar el ejecicio. Incluye más temas","Error",new Ejercicios());
+        }
     }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
